@@ -52,6 +52,7 @@ export interface Content {
     desc: string;
   };
   googleSheetUrl?: string;
+  logoUrl?: string;
   whatsappNumber: string;
   socialLinks: {
     instagram: string;

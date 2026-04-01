@@ -47,6 +47,27 @@ export const AdminPanel = ({ isOpen, onClose, content, setContent, onSave }: Adm
             
             <div className="flex-1 overflow-y-auto p-6">
               <div className="space-y-8">
+                {/* Logo & Branding Edit */}
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700">
+                  <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <ImageIcon className="w-5 h-5 text-brand-blue" />
+                    Logo & Branding
+                  </h4>
+                  <div className="grid gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">URL Logo (PNG Transparan disarankan)</label>
+                      <input 
+                        type="text" 
+                        value={content.logoUrl || ""}
+                        onChange={(e) => setContent({...content, logoUrl: e.target.value})}
+                        className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white" 
+                        placeholder="https://example.com/logo.png"
+                      />
+                      <p className="text-xs text-slate-500 mt-1 italic">*Jika dikosongkan, akan menggunakan logo teks default.</p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Hero Section Edit */}
                 <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700">
                   <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">

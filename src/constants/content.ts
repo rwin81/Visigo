@@ -46,7 +46,7 @@ export const defaultContent: Content = {
     desc: "Kami menggabungkan kenyamanan layanan di rumah dengan kualitas pemeriksaan standar klinik mata profesional.",
     images: [
       "https://images.unsplash.com/photo-1580281658626-ee379f3cce93?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      "https://images.unsplash.com/photo-1551076805-e1869043e560?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       "https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
     ],
     imagePositions: ["center", "center", "center"],
@@ -94,6 +94,7 @@ export const defaultContent: Content = {
     desc: "Jangan tunda lagi. Jadwalkan pemeriksaan mata Anda sekarang dan nikmati layanan optik profesional di rumah."
   },
   googleSheetUrl: "",
+  logoUrl: "https://i.ibb.co/FLfp65gD/VISIGO-LOGO.png",
   whatsappNumber: "6281234567890",
   socialLinks: {
     instagram: "https://instagram.com",

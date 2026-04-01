@@ -16,7 +16,7 @@ export const Footer = ({ setIsLoginOpen, content }: FooterProps) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-6 bg-white w-fit p-2 pr-4 rounded-2xl shadow-sm">
-              <Logo className="h-10 sm:h-12 w-auto" />
+              <Logo className="h-10 sm:h-12 w-auto" logoUrl={content.logoUrl} />
             </div>
             <p className="text-slate-400 max-w-sm mb-6">
               Layanan optik keliling berbasis home service yang profesional, terpercaya, dan berbasis teknologi.

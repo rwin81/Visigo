@@ -6,15 +6,16 @@ interface NavbarProps {
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean) => void;
   setIsBookingOpen: (val: boolean) => void;
+  logoUrl?: string;
 }
 
-export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen }: NavbarProps) => {
+export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }: NavbarProps) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-2 bg-white/80 dark:bg-white p-1.5 pr-3 rounded-2xl shadow-sm border border-slate-100 dark:border-white/20">
-            <Logo className="h-8 sm:h-10 w-auto" />
+            <Logo className="h-8 sm:h-10 w-auto" logoUrl={logoUrl} />
           </div>
           
           <div className="hidden md:flex items-center gap-8">

@@ -139,7 +139,7 @@ export default function App() {
           className="flex flex-col items-center"
         >
           <div className="relative p-6 flex items-center justify-center bg-white rounded-3xl shadow-lg mb-4">
-            <Logo className="h-12 sm:h-16 w-auto" textClassName="text-3xl" />
+            <Logo className="h-12 sm:h-16 w-auto" textClassName="text-3xl" logoUrl={content.logoUrl} />
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -159,6 +159,7 @@ export default function App() {
           isDarkMode={isDarkMode} 
           setIsDarkMode={setIsDarkMode} 
           setIsBookingOpen={setIsBookingOpen} 
+          logoUrl={content.logoUrl}
         />
 
         <main>
