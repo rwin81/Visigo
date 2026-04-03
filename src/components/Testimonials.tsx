@@ -12,6 +12,7 @@ interface TestimonialsProps {
 export const Testimonials = ({ content }: TestimonialsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,6 +32,17 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
   }, []);
 
   const totalPages = Math.ceil(content.items.length / itemsPerPage);
+
+  // Auto-slide logic
+  useEffect(() => {
+    if (isPaused || totalPages <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalPages);
+    }, 5000); // Slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [isPaused, totalPages]);
 
   // Clamp currentIndex when totalPages changes
   useEffect(() => {
@@ -71,7 +83,12 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
   );
 
   return (
-    <section id="testimoni" className="py-24 bg-slate-50 dark:bg-slate-900/50 overflow-hidden">
+    <section 
+      id="testimoni" 
+      className="py-24 bg-slate-50 dark:bg-slate-900/50 overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div className="max-w-2xl">

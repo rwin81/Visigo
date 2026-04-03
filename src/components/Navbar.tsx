@@ -19,6 +19,25 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
     { name: 'Testimoni', href: '#testimoni' },
   ];
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      const offset = 80; // Navbar height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,6 +51,7 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
               <a 
                 key={link.name}
                 href={link.href} 
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-slate-600 dark:text-slate-300 hover:text-brand-blue dark:hover:text-brand-cyan font-medium transition-colors"
               >
                 {link.name}
@@ -81,7 +101,7 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className="block px-4 py-3 text-base font-medium text-slate-600 dark:text-slate-300 hover:text-brand-blue dark:hover:text-brand-cyan hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl transition-all"
                 >
                   {link.name}

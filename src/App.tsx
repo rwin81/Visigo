@@ -13,6 +13,7 @@ import { Coverage } from './components/Coverage';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
+import { SocialProof } from './components/SocialProof';
 import { defaultContent } from './constants/content';
 import { Content } from './types';
 
@@ -122,6 +123,9 @@ export default function App() {
         </main>
 
         <Footer content={content} />
+
+        {/* Social Proof Notifications */}
+        <SocialProof />
 
         {/* Floating WhatsApp Button */}
         <motion.button
