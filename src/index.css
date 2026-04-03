@@ -12,11 +12,18 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
   }
   
   body {
     @apply antialiased text-slate-900 dark:text-slate-100;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  section {
+    scroll-margin-top: 80px;
   }
 }

@@ -10,7 +10,7 @@ interface HowItWorksProps {
 
 export const HowItWorks = ({ content }: HowItWorksProps) => {
   return (
-    <section id="cara-kerja" className="py-24 bg-slate-50 dark:bg-slate-900/50">
+    <section id="cara-kerja" className="py-24 bg-slate-50 dark:bg-slate-900/50 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <FadeIn>

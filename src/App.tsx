@@ -102,7 +102,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <div className={`min-h-screen font-sans transition-colors duration-300 ${isDarkMode ? 'bg-slate-950 text-slate-50' : 'bg-slate-50 text-slate-900'}`}>
+      <div className={`min-h-screen font-sans transition-colors duration-300 overflow-x-hidden ${isDarkMode ? 'bg-slate-950 text-slate-50' : 'bg-slate-50 text-slate-900'}`}>
         <Navbar 
           isDarkMode={isDarkMode} 
           setIsDarkMode={setIsDarkMode} 

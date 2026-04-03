@@ -28,7 +28,7 @@ export const TrustGallery = () => {
   ];
 
   return (
-    <section className="py-24 bg-slate-50 dark:bg-slate-900/30">
+    <section className="py-24 bg-slate-50 dark:bg-slate-900/30 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <FadeIn>

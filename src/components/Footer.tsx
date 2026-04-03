@@ -10,7 +10,7 @@ interface FooterProps {
 
 export const Footer = ({ content }: FooterProps) => {
   return (
-    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
+    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-2">

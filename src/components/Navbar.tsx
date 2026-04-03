@@ -27,14 +27,20 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
     const element = document.getElementById(targetId);
     
     if (element) {
-      const offset = 80; // Navbar height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      // Small delay to let the menu closing animation start
+      setTimeout(() => {
+        const offset = 80; // Navbar height
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }, 150);
+    } else {
+      // Fallback if element not found, just close menu
+      setIsMenuOpen(false);
     }
   };
 
