@@ -38,7 +38,7 @@ export const WhyVisiGo = ({ content }: WhyVisiGoProps) => {
                 style={{ objectPosition: content.imagePositions?.[2] || 'center' }}
                 referrerPolicy="no-referrer" 
               />
-              <div className="bg-brand-blue rounded-3xl p-8 text-white shadow-lg aspect-[4/5] flex flex-col justify-center">
+              <div className="bg-brand-blue rounded-3xl p-6 sm:p-8 text-white shadow-lg aspect-[4/5] flex flex-col justify-center">
                 <h3 className="text-2xl font-bold mb-4">{formatVisiGoText(content.highlight.title)}</h3>
                 <p className="text-blue-100">{formatVisiGoText(content.highlight.desc)}</p>
               </div>

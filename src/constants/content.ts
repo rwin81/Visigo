@@ -5,7 +5,7 @@ export const defaultContent: Content = {
     badge: "Layanan Mata Era Baru",
     title: "Cek Mata Tanpa",
     titleHighlight: "Keluar Rumah",
-    desc: "VisiGo Home Eye Care Service – layanan profesional langsung ke rumah Anda.",
+    desc: "VisiGo datang langsung ke lokasi Anda. Layanan profesional, tim ahli, dan peralatan lengkap langsung di rumah Anda.",
     image: "https://i.ibb.co.com/JwSFKFRL/SPG-JKT.png",
     imagePosition: "center"
   },
@@ -45,9 +45,9 @@ export const defaultContent: Content = {
     title: "Kenapa Memilih VisiGo?",
     desc: "Kami menggabungkan kenyamanan layanan di rumah dengan kualitas pemeriksaan standar klinik mata profesional.",
     images: [
-      "https://images.unsplash.com/photo-1580281658626-ee379f3cce93?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      "https://i.ibb.co/gMzsctFz/SPG-KAOS.png",
+      "https://i.ibb.co.com/tMMykfhs/SPG-ROMPI.png",
+      "https://i.ibb.co.com/2098cgYK/SPG-COW1.png"
     ],
     imagePositions: ["center", "center", "center"],
     highlight: {
@@ -65,29 +65,29 @@ export const defaultContent: Content = {
     title: "Apa Kata Mereka?",
     desc: "Cerita pelanggan yang telah merasakan kemudahan VisiGo.",
     items: [
-      { name: "Budi Santoso", city: "Surabaya", text: "Sangat praktis! Nggak perlu macet-macetan ke mall. Optikernya ramah dan alatnya canggih banget.", avatar: "https://i.pravatar.cc/150?u=budi" },
-      { name: "Siti Aminah", city: "Sidoarjo", text: "Pilihan frame-nya banyak dan kekinian. Kacamata diantar tepat waktu dan pas banget dipakai.", avatar: "https://i.pravatar.cc/150?u=siti" },
-      { name: "Andi Wijaya", city: "Gresik", text: "Pelayanan profesional. Penjelasan soal kondisi mata sangat detail. Recommended banget buat yang sibuk.", avatar: "https://i.pravatar.cc/150?u=andi" },
-      { name: "Rina Kartika", city: "Malang", text: "Layanan yang sangat membantu untuk orang tua saya yang sulit bepergian. Terima kasih VisiGo!", avatar: "https://i.pravatar.cc/150?u=rina" },
-      { name: "Ahmad Fauzi", city: "Jakarta", text: "Kualitas lensanya top, pelayanannya cepat. Booking hari ini, besok langsung datang.", avatar: "https://i.pravatar.cc/150?u=ahmad" },
-      { name: "Linda Wahyuni", city: "Bandung", text: "Suka banget sama konsepnya. Bisa pilih frame sepuasnya di rumah sambil santai.", avatar: "https://i.pravatar.cc/150?u=linda" },
-      { name: "Eko Prasetyo", city: "Semarang", text: "Alat periksanya modern banget, hasilnya akurat. Harganya juga bersaing dengan optik besar.", avatar: "https://i.pravatar.cc/150?u=eko" },
-      { name: "Maya Sari", city: "Yogyakarta", text: "Solusi buat ibu rumah tangga yang ribet bawa anak ke optik. VisiGo bener-bener penyelamat!", avatar: "https://i.pravatar.cc/150?u=maya" },
-      { name: "Deni Ramadhan", city: "Solo", text: "Prosesnya nggak ribet, adminnya fast respon. Kacamata jadinya juga cepet.", avatar: "https://i.pravatar.cc/150?u=deni" },
-      { name: "Sari Dewi", city: "Denpasar", text: "Sangat profesional. Optikernya sabar menjelaskan hasil periksa mata saya. Puas banget!", avatar: "https://i.pravatar.cc/150?u=sari" },
-      { name: "Rizky Pratama", city: "Medan", text: "Layanan jemput bola yang sangat efisien. Kualitas frame premium tapi harga tetap masuk akal.", avatar: "https://i.pravatar.cc/150?u=rizky" },
-      { name: "Anita Putri", city: "Palembang", text: "Sangat membantu buat saya yang punya balita. Periksa mata jadi tenang tanpa harus keluar rumah.", avatar: "https://i.pravatar.cc/150?u=anita" },
-      { name: "Hendra Kusuma", city: "Makassar", text: "Alat periksanya benar-benar canggih, hasilnya akurat. Proses pemesanan sampai pengiriman sangat lancar.", avatar: "https://i.pravatar.cc/150?u=hendra" },
-      { name: "Diana Lestari", city: "Balikpapan", text: "Frame-nya stylish banget! Banyak pilihan yang nggak ada di optik biasa. Pelayanannya juara.", avatar: "https://i.pravatar.cc/150?u=diana" },
-      { name: "Fajar Siddiq", city: "Banjarmasin", text: "Solusi cerdas buat periksa mata. Nggak perlu antre, tinggal tunggu di rumah. Mantap VisiGo!", avatar: "https://i.pravatar.cc/150?u=fajar" },
-      { name: "Nadia Utami", city: "Manado", text: "Adminnya sangat membantu dan ramah. Kacamata sampai dengan aman dan packing-nya rapi sekali.", avatar: "https://i.pravatar.cc/150?u=nadia" },
-      { name: "Bambang Hermawan", city: "Pontianak", text: "Sangat direkomendasikan! Layanan home service terbaik yang pernah saya coba untuk urusan mata.", avatar: "https://i.pravatar.cc/150?u=bambang" }
+      { name: "Budi Santoso", city: "Tuban", text: "Sangat praktis! Nggak perlu macet-macetan ke mall. Optikernya ramah dan alatnya canggih banget.", avatar: "https://i.pravatar.cc/150?u=budi" },
+      { name: "Siti Aminah", city: "Bojonegoro", text: "Pilihan frame-nya banyak dan kekinian. Kacamata diantar tepat waktu dan pas banget dipakai.", avatar: "https://i.pravatar.cc/150?u=siti" },
+      { name: "Andi Wijaya", city: "Lamongan", text: "Pelayanan profesional. Penjelasan soal kondisi mata sangat detail. Recommended banget buat yang sibuk.", avatar: "https://i.pravatar.cc/150?u=andi" },
+      { name: "Rina Kartika", city: "Rembang", text: "Layanan yang sangat membantu untuk orang tua saya yang sulit bepergian. Terima kasih VisiGo!", avatar: "https://i.pravatar.cc/150?u=rina" },
+      { name: "Ahmad Fauzi", city: "Blora", text: "Kualitas lensanya top, pelayanannya cepat. Booking hari ini, besok langsung datang.", avatar: "https://i.pravatar.cc/150?u=ahmad" },
+      { name: "Linda Wahyuni", city: "Purwodadi", text: "Suka banget sama konsepnya. Bisa pilih frame sepuasnya di rumah sambil santai.", avatar: "https://i.pravatar.cc/150?u=linda" },
+      { name: "Eko Prasetyo", city: "Sragen", text: "Alat periksanya modern banget, hasilnya akurat. Harganya juga bersaing dengan optik besar.", avatar: "https://i.pravatar.cc/150?u=eko" },
+      { name: "Maya Sari", city: "Jogjakarta", text: "Solusi buat ibu rumah tangga yang ribet bawa anak ke optik. VisiGo bener-bener penyelamat!", avatar: "https://i.pravatar.cc/150?u=maya" },
+      { name: "Deni Ramadhan", city: "Purworejo", text: "Prosesnya nggak ribet, adminnya fast respon. Kacamata jadinya juga cepet.", avatar: "https://i.pravatar.cc/150?u=deni" },
+      { name: "Sari Dewi", city: "Gunungkidul", text: "Sangat profesional. Optikernya sabar menjelaskan hasil periksa mata saya. Puas banget!", avatar: "https://i.pravatar.cc/150?u=sari" },
+      { name: "Rizky Pratama", city: "Wonogiri", text: "Layanan jemput bola yang sangat efisien. Kualitas frame premium tapi harga tetap masuk akal.", avatar: "https://i.pravatar.cc/150?u=rizky" },
+      { name: "Anita Putri", city: "Demak", text: "Sangat membantu buat saya yang punya balita. Periksa mata jadi tenang tanpa harus keluar rumah.", avatar: "https://i.pravatar.cc/150?u=anita" },
+      { name: "Hendra Kusuma", city: "Tuban", text: "Alat periksanya benar-benar canggih, hasilnya akurat. Proses pemesanan sampai pengiriman sangat lancar.", avatar: "https://i.pravatar.cc/150?u=hendra" },
+      { name: "Diana Lestari", city: "Bojonegoro", text: "Frame-nya stylish banget! Banyak pilihan yang nggak ada di optik biasa. Pelayanannya juara.", avatar: "https://i.pravatar.cc/150?u=diana" },
+      { name: "Fajar Siddiq", city: "Lamongan", text: "Solusi cerdas buat periksa mata. Nggak perlu antre, tinggal tunggu di rumah. Mantap VisiGo!", avatar: "https://i.pravatar.cc/150?u=fajar" },
+      { name: "Nadia Utami", city: "Rembang", text: "Adminnya sangat membantu and ramah. Kacamata sampai dengan aman dan packing-nya rapi sekali.", avatar: "https://i.pravatar.cc/150?u=nadia" },
+      { name: "Bambang Hermawan", city: "Blora", text: "Sangat direkomendasikan! Layanan home service terbaik yang pernah saya coba untuk urusan mata.", avatar: "https://i.pravatar.cc/150?u=bambang" }
     ]
   },
   coverage: {
-    title: "Area Layanan VisiGo",
-    desc: "Saat ini kami melayani area Surabaya, Sidoarjo, dan Gresik. Kami akan segera hadir di kota-kota lainnya!",
-    cities: ["Surabaya", "Sidoarjo", "Gresik"]
+    title: "Jaringan Besar VisiGo",
+    desc: "Didukung oleh 200+ Tim Profesional di berbagai kota. Saat ini kami melayani area Tuban, Bojonegoro, Lamongan, Rembang, Blora, Purwodadi, Sragen, jogjakarta, Purworejo, Gunungkidul, wonogiri, Demak.",
+    cities: ["Tuban", "Bojonegoro", "Lamongan", "Rembang", "Blora", "Purwodadi", "Sragen", "Jogjakarta", "Purworejo", "Gunungkidul", "Wonogiri", "Demak"]
   },
   cta: {
     title: "Kesehatan Mata Anda Adalah Prioritas Kami",
@@ -95,10 +95,10 @@ export const defaultContent: Content = {
   },
   googleSheetUrl: "",
   logoUrl: "https://i.ibb.co/FLfp65gD/VISIGO-LOGO.png",
-  whatsappNumber: "6281234567890",
+  whatsappNumber: "6285232730855",
   socialLinks: {
-    instagram: "https://instagram.com",
-    facebook: "https://facebook.com",
-    tiktok: "https://tiktok.com"
+    instagram: "https://www.instagram.com/visigo.homeeyecare?igsh=MWt0bGwzYm5xYnB0NA%3D%3D&utm_source=qr",
+    facebook: "https://www.facebook.com/share/1E7UmGBB3F/?mibextid=wwXIfr",
+    tiktok: "https://www.tiktok.com/@visigo.homeeyecare?_r=1&_t=ZS-95ATqXT2ThN"
   }
 };

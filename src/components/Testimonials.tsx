@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { FadeIn } from './FadeIn';
 import { formatVisiGoText } from '../lib/formatters';
 import { Content } from '../types';
@@ -32,6 +32,13 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
 
   const totalPages = Math.ceil(content.items.length / itemsPerPage);
 
+  // Clamp currentIndex when totalPages changes
+  useEffect(() => {
+    if (currentIndex >= totalPages && totalPages > 0) {
+      setCurrentIndex(totalPages - 1);
+    }
+  }, [totalPages, currentIndex]);
+
   const next = () => {
     setCurrentIndex((prev) => (prev + 1) % totalPages);
   };
@@ -39,6 +46,29 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
   const prev = () => {
     setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
   };
+
+  const TestimonialCard = ({ testi, index }: { testi: any, index: number }) => (
+    <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm h-full flex flex-col transition-transform hover:scale-[1.02] duration-300">
+      <div className="flex gap-1 mb-6">
+        {[...Array(5)].map((_, j) => (
+          <Star key={j} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+        ))}
+      </div>
+      <p className="text-slate-700 dark:text-slate-300 mb-8 flex-grow italic leading-relaxed">"{formatVisiGoText(testi.text)}"</p>
+      <div className="flex items-center gap-4">
+        <img 
+          src={testi.avatar} 
+          alt={testi.name} 
+          className="w-12 h-12 rounded-full object-cover border-2 border-brand-blue/10" 
+          referrerPolicy="no-referrer" 
+        />
+        <div>
+          <p className="font-bold text-slate-900 dark:text-white">{testi.name}</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">{testi.city}</p>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section id="testimoni" className="py-24 bg-slate-50 dark:bg-slate-900/50 overflow-hidden">
@@ -69,53 +99,50 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
           </div>
         </div>
 
-        <div className="relative">
+        <motion.div 
+          key="slider"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="relative overflow-hidden"
+        >
           <motion.div 
-            className="flex gap-8"
+            className="flex"
             animate={{ x: `-${currentIndex * 100}%` }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            {content.items.map((testi, i) => (
-              <div 
-                key={i} 
-                className="min-w-full sm:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.35rem)]"
-              >
-                <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm h-full flex flex-col transition-transform hover:scale-[1.02] duration-300">
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-slate-700 dark:text-slate-300 mb-8 flex-grow italic leading-relaxed">"{formatVisiGoText(testi.text)}"</p>
-                  <div className="flex items-center gap-4">
-                    <img 
-                      src={testi.avatar} 
-                      alt={testi.name} 
-                      className="w-12 h-12 rounded-full object-cover border-2 border-brand-blue/10" 
-                      referrerPolicy="no-referrer" 
-                    />
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white">{testi.name}</p>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">{testi.city}</p>
+            {[...Array(totalPages)].map((_, pageIndex) => (
+              <div key={pageIndex} className="flex-shrink-0 w-full flex gap-8 px-4">
+                {content.items
+                  .slice(pageIndex * itemsPerPage, (pageIndex + 1) * itemsPerPage)
+                  .map((testi, i) => (
+                    <div key={i} className="flex-1 min-w-0">
+                      <TestimonialCard testi={testi} index={i} />
                     </div>
-                  </div>
-                </div>
+                  ))}
+                {pageIndex === totalPages - 1 && 
+                 content.items.slice(pageIndex * itemsPerPage).length < itemsPerPage && 
+                 [...Array(itemsPerPage - content.items.slice(pageIndex * itemsPerPage).length)].map((_, i) => (
+                   <div key={`spacer-${i}`} className="flex-1" />
+                 ))
+                }
               </div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
 
-        <div className="flex justify-center gap-2 mt-12">
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentIndex(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                currentIndex === i ? 'w-8 bg-brand-blue' : 'w-2 bg-slate-300 dark:bg-slate-700'
-              }`}
-              aria-label={`Go to page ${i + 1}`}
-            />
-          ))}
+        <div className="flex flex-col items-center gap-8 mt-12">
+          <div className="flex justify-center gap-2">
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentIndex === i ? 'w-8 bg-brand-blue' : 'w-2 bg-slate-300 dark:bg-slate-700'
+                }`}
+                aria-label={`Go to page ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

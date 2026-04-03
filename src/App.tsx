@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Logo } from './components/Logo';
 import { Navbar } from './components/Navbar';
@@ -7,13 +7,12 @@ import { Problems } from './components/Problems';
 import { Services } from './components/Services';
 import { HowItWorks } from './components/HowItWorks';
 import { WhyVisiGo } from './components/WhyVisiGo';
+import { TrustGallery } from './components/TrustGallery';
 import { Testimonials } from './components/Testimonials';
 import { Coverage } from './components/Coverage';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
-import { LoginModal } from './components/LoginModal';
-import { AdminPanel } from './components/AdminPanel';
 import { defaultContent } from './constants/content';
 import { Content } from './types';
 
@@ -56,43 +55,14 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { has
   }
 }
 
-const deepMerge = (target: any, source: any): any => {
-  if (!source) return target;
-  const output = { ...target };
-  Object.keys(source).forEach(key => {
-    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-      output[key] = deepMerge(target[key] || {}, source[key]);
-    } else {
-      output[key] = source[key];
-    }
-  });
-  return output;
-};
-
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState(false);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [content, setContent] = useState<Content>(defaultContent);
+  const [content] = useState<Content>(defaultContent);
 
-  // Load content from localStorage
+  // Simulate loading
   useEffect(() => {
-    const savedContent = localStorage.getItem('visigo-content-v2');
-    if (savedContent) {
-      try {
-        const parsed = JSON.parse(savedContent);
-        const merged = deepMerge(defaultContent, parsed);
-        setContent(merged);
-      } catch (e) {
-        console.error("Failed to parse saved content", e);
-      }
-    }
-    
-    // Simulate loading
     const timer = setTimeout(() => setIsLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
@@ -105,29 +75,6 @@ export default function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode]);
-
-  const handleSaveContent = (newContent: Content) => {
-    try {
-      setContent(newContent);
-      localStorage.setItem('visigo-content-v2', JSON.stringify(newContent));
-      setIsAdminOpen(false);
-    } catch (error) {
-      console.error("Failed to save content to localStorage:", error);
-      alert("Gagal menyimpan perubahan. Pastikan browser Anda mengizinkan penyimpanan lokal (LocalStorage).");
-    }
-  };
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === "@123") {
-      setIsAdminOpen(true);
-      setIsLoginOpen(false);
-      setPassword("");
-      setLoginError(false);
-    } else {
-      setLoginError(true);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -168,12 +115,13 @@ export default function App() {
           <Services content={content.services} />
           <HowItWorks content={content.howItWorks} />
           <WhyVisiGo content={content.why} />
+          <TrustGallery />
           <Testimonials content={content.testimonials} />
           <Coverage content={content.coverage} />
           <CTA content={content.cta} setIsBookingOpen={setIsBookingOpen} />
         </main>
 
-        <Footer setIsLoginOpen={setIsLoginOpen} content={content} />
+        <Footer content={content} />
 
         {/* Floating WhatsApp Button */}
         <motion.button
@@ -181,10 +129,10 @@ export default function App() {
           animate={{ scale: 1 }}
           transition={{ delay: 1, type: "spring" }}
           onClick={() => setIsBookingOpen(true)}
-          className="fixed bottom-6 right-6 z-50 bg-brand-blue hover:bg-brand-blue/90 text-white p-3 rounded-full shadow-2xl shadow-brand-blue/40 transition-transform hover:scale-110 flex items-center justify-center cursor-pointer"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-brand-blue hover:bg-brand-blue/90 text-white p-2 sm:p-3 rounded-full shadow-2xl shadow-brand-blue/40 transition-transform hover:scale-110 flex items-center justify-center cursor-pointer"
           aria-label="Chat WhatsApp"
         >
-          <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-16 h-16 scale-125 object-contain" referrerPolicy="no-referrer" />
+          <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-12 h-12 sm:w-16 sm:h-16 scale-110 sm:scale-125 object-contain" referrerPolicy="no-referrer" />
         </motion.button>
 
         {/* Modals */}
@@ -192,27 +140,6 @@ export default function App() {
           isOpen={isBookingOpen} 
           onClose={() => setIsBookingOpen(false)} 
           content={content}
-        />
-        
-        <LoginModal 
-          isOpen={isLoginOpen} 
-          onClose={() => {
-            setIsLoginOpen(false);
-            setLoginError(false);
-            setPassword("");
-          }}
-          onLogin={handleLogin}
-          password={password}
-          setPassword={setPassword}
-          loginError={loginError}
-        />
-
-        <AdminPanel 
-          isOpen={isAdminOpen} 
-          onClose={() => setIsAdminOpen(false)}
-          content={content}
-          setContent={setContent}
-          onSave={handleSaveContent}
         />
       </div>
     </ErrorBoundary>

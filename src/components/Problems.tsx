@@ -34,7 +34,7 @@ export const Problems = ({ content }: ProblemsProps) => {
         </div>
 
         <FadeIn delay={0.4}>
-          <div className="bg-gradient-to-r from-brand-blue to-brand-cyan rounded-3xl p-8 md:p-12 text-center text-white shadow-xl relative overflow-hidden">
+          <div className="bg-gradient-to-r from-brand-blue to-brand-cyan rounded-[2rem] sm:rounded-3xl p-6 sm:p-8 md:p-12 text-center text-white shadow-xl relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div className="relative z-10">
               <div className="inline-flex items-center justify-center bg-white text-brand-blue p-4 rounded-full mb-6 shadow-lg">

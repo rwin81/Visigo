@@ -10,7 +10,7 @@ interface BookingModalProps {
 }
 
 export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) => {
-  const [step, setStep] = useState<'selection' | 'booking' | 'order'>('selection');
+  const [step, setStep] = useState<'selection' | 'booking' | 'order' | 'success'>('selection');
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -22,6 +22,14 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     branch: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Reset form when modal closes
+  React.useEffect(() => {
+    if (!isOpen) {
+      const timer = setTimeout(resetForm, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   const resetForm = () => {
     setStep('selection');
@@ -54,14 +62,14 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           },
           body: JSON.stringify({
             ...formData,
-            type: type, // Add type to distinguish in Google Sheet
+            type: type,
             timestamp: new Date().toLocaleString('id-ID'),
             source: window.location.hostname
           }),
         });
       }
 
-      // 2. Prepare WhatsApp Message
+      // 2. Prepare WhatsApp Message for Admin
       let message = '';
       if (step === 'booking') {
         message = `Halo VisiGo, saya ingin booking layanan:%0A%0ANama: ${formData.name}%0ANo. WA: ${formData.phone}%0AAlamat: ${formData.address}%0ALayanan: ${formData.service}%0A%0AMohon info jadwal yang tersedia. Terima kasih.`;
@@ -69,12 +77,17 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
         message = `Halo VisiGo, saya ingin order produk:%0A%0ANama: ${formData.name}%0ANo. WA: ${formData.phone}%0AAlamat: ${formData.address}%0AProduk: ${formData.product}%0AKeterangan: ${formData.description}%0AReferensi: ${formData.reference}%0ACabang: ${formData.branch}%0A%0AMohon info ketersediaan stok. Terima kasih.`;
       }
       
-      // 3. Open WhatsApp
+      // 3. Open WhatsApp to Admin
       window.open(`https://wa.me/${content.whatsappNumber}?text=${message}`, '_blank');
       
-      // 4. Close Modal and Reset
-      onClose();
-      setTimeout(resetForm, 500);
+      // 4. Show Success Step
+      setStep('success');
+      
+      // Auto close after 5 seconds
+      setTimeout(() => {
+        if (isOpen) onClose();
+      }, 5000);
+
     } catch (error) {
       console.error("Error submitting:", error);
       alert("Terjadi kesalahan saat mengirim data. Silakan coba lagi.");
@@ -102,7 +115,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           >
             <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                {step !== 'selection' && (
+                {step !== 'selection' && step !== 'success' && (
                   <button 
                     onClick={() => setStep('selection')}
                     className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
@@ -111,7 +124,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   </button>
                 )}
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                  {step === 'selection' ? 'Pilih Layanan' : step === 'booking' ? 'Booking Layanan' : 'Order Produk'}
+                  {step === 'selection' ? 'Pilih Layanan' : step === 'booking' ? 'Booking Layanan' : step === 'order' ? 'Order Produk' : 'Booking Berhasil!'}
                 </h3>
               </div>
               <button 
@@ -153,6 +166,22 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                         <p className="text-sm text-slate-500">Pesan kacamata, lensa, atau frame</p>
                       </div>
                     </div>
+                  </button>
+                </div>
+              ) : step === 'success' ? (
+                <div className="py-8 text-center">
+                  <div className="w-20 h-20 bg-brand-green/10 text-brand-green rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Terima Kasih, {formData.name}!</h4>
+                  <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                    Booking Anda telah kami terima. Tim VisiGo akan segera menghubungi Anda melalui WhatsApp untuk konfirmasi jadwal.
+                  </p>
+                  <button 
+                    onClick={onClose}
+                    className="w-full py-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                  >
+                    Tutup
                   </button>
                 </div>
               ) : (

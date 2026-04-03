@@ -5,11 +5,10 @@ import { Instagram, Facebook } from 'lucide-react';
 import { Content } from '../types';
 
 interface FooterProps {
-  setIsLoginOpen: (val: boolean) => void;
   content: Content;
 }
 
-export const Footer = ({ setIsLoginOpen, content }: FooterProps) => {
+export const Footer = ({ content }: FooterProps) => {
   return (
     <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +83,6 @@ export const Footer = ({ setIsLoginOpen, content }: FooterProps) => {
           <div className="flex gap-6">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <button onClick={() => setIsLoginOpen(true)} className="hover:text-white transition-colors">Admin Login</button>
           </div>
         </div>
       </div>
