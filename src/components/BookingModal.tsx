@@ -83,9 +83,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           phone: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
           whatsapp_link: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
           type: type, 
-          timestamp: new Date().toLocaleString('id-ID'),
-          device: window.navigator.userAgent,
-          source: window.location.hostname
+          timestamp: new Date().toLocaleString('id-ID')
         };
 
         await fetch(content.googleSheetUrl, {
