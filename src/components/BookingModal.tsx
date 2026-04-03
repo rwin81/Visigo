@@ -45,32 +45,62 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     });
   };
 
+  const formatWhatsAppLink = (phone: string) => {
+    // Remove all non-digit characters except +
+    let cleaned = phone.replace(/[^\d+]/g, '');
+    
+    // Handle +62 or 62 or 08
+    if (cleaned.startsWith('+')) {
+      cleaned = cleaned.substring(1);
+    }
+    
+    if (cleaned.startsWith('0')) {
+      cleaned = '62' + cleaned.substring(1);
+    }
+    
+    if (!cleaned.startsWith('62') && cleaned.length >= 9) {
+      cleaned = '62' + cleaned;
+    }
+    
+    return `https://wa.me/${cleaned}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
       const type = step === 'booking' ? 'Booking Layanan' : 'Order Produk';
+      const waLink = formatWhatsAppLink(formData.phone);
       
       // 1. Save to Google Sheet if URL is provided
+      // Note: This requires a Google Apps Script Web App set up to receive POST requests
       if (content.googleSheetUrl) {
+        const payload = {
+          ...formData,
+          // We send the hyperlink formula in the 'phone' field so it works 
+          // directly with your existing Apps Script (data.phone)
+          phone: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
+          whatsapp_link: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
+          type: type, 
+          timestamp: new Date().toLocaleString('id-ID'),
+          device: window.navigator.userAgent,
+          source: window.location.hostname
+        };
+
         await fetch(content.googleSheetUrl, {
           method: 'POST',
           mode: 'no-cors',
           headers: {
             'Content-Type': 'text/plain',
           },
-          body: JSON.stringify({
-            ...formData,
-            type: type,
-            timestamp: new Date().toLocaleString('id-ID'),
-            source: window.location.hostname
-          }),
+          body: JSON.stringify(payload),
         });
       }
 
       // 2. Prepare WhatsApp Message for Admin
       let message = '';
+      
       if (step === 'booking') {
         message = `Halo VisiGo, saya ingin booking layanan:%0A%0ANama: ${formData.name}%0ANo. WA: ${formData.phone}%0AAlamat: ${formData.address}%0ALayanan: ${formData.service}%0A%0AMohon info jadwal yang tersedia. Terima kasih.`;
       } else {
@@ -202,11 +232,19 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                     <input 
                       required
                       type="tel" 
+                      pattern="[0-9]*"
                       value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                      placeholder="08xx xxxx xxxx" 
+                      placeholder="Contoh: 08123456789" 
+                      title="Masukkan nomor WhatsApp yang valid (hanya angka)"
                     />
+                    {formData.phone.length >= 9 && (
+                      <p className="text-[10px] text-brand-blue dark:text-brand-cyan mt-1.5 flex items-center gap-1">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.172 13.828a4 4 0 015.656 0l4-4a4 4 0 115.656 5.656l-1.101 1.101" /></svg>
+                        Link WA: {formatWhatsAppLink(formData.phone)}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Alamat Lengkap</label>
