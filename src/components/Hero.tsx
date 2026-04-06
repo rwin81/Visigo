@@ -85,7 +85,7 @@ export const Hero = ({ content, setIsBookingOpen }: HeroProps) => {
                 className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-2xl font-black text-lg sm:text-xl transition-all shadow-2xl shadow-brand-blue/30 hover:shadow-brand-blue/50 hover:scale-105 flex items-center justify-center gap-3 group"
               >
                 <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-6 h-6 sm:w-8 sm:h-8 group-hover:rotate-12 transition-transform" referrerPolicy="no-referrer" />
-                BOOKING SEKARANG
+                BOOKING SEKARANG VIA WHATSAPP
               </button>
               <a 
                 href="#layanan"
@@ -141,6 +141,20 @@ export const Hero = ({ content, setIsBookingOpen }: HeroProps) => {
                   <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
+            </motion.div>
+
+            {/* New Floating Hook: 7 Days Service */}
+            <motion.div
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.2, type: "spring" }}
+              className="absolute -top-12 -right-6 md:-right-12 z-20 bg-brand-green text-white px-6 py-3 rounded-2xl shadow-2xl shadow-brand-green/30 flex items-center gap-3 border-2 border-white dark:border-slate-900"
+            >
+              <div className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+              </div>
+              <p className="font-black text-sm tracking-widest uppercase">7 Hari Seminggu</p>
             </motion.div>
 
             {/* Main Image Container */}

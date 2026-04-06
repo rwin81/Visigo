@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThumbsDown, Clock, Eye, Truck } from 'lucide-react';
+import { Smartphone, Activity, Eye, Truck } from 'lucide-react';
 import { FadeIn } from './FadeIn';
 import { formatVisiGoText } from '../lib/formatters';
 import { Content } from '../types';
@@ -20,17 +20,21 @@ export const Problems = ({ content }: ProblemsProps) => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {content.items.map((item, i) => (
-            <FadeIn delay={i * 0.1} key={i}>
-              <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center h-full">
-                <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full mb-6 text-red-500">
-                  {i === 0 ? <ThumbsDown className="w-8 h-8" /> : i === 1 ? <Clock className="w-8 h-8" /> : <Eye className="w-8 h-8" />}
+          {content.items.map((item, i) => {
+            const icons = [Smartphone, Activity, Eye];
+            const Icon = icons[i] || Eye;
+            return (
+              <FadeIn delay={i * 0.1} key={i}>
+                <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center h-full group hover:shadow-xl transition-shadow">
+                  <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full mb-6 text-red-500 group-hover:scale-110 transition-transform">
+                    <Icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{formatVisiGoText(item.title)}</h3>
+                  <p className="text-slate-600 dark:text-slate-400">{formatVisiGoText(item.desc)}</p>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{formatVisiGoText(item.title)}</h3>
-                <p className="text-slate-600 dark:text-slate-400">{formatVisiGoText(item.desc)}</p>
-              </div>
-            </FadeIn>
-          ))}
+              </FadeIn>
+            );
+          })}
         </div>
 
         <FadeIn delay={0.4}>

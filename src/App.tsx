@@ -6,7 +6,6 @@ import { Hero } from './components/Hero';
 import { Problems } from './components/Problems';
 import { Services } from './components/Services';
 import { HowItWorks } from './components/HowItWorks';
-import { WhyVisiGo } from './components/WhyVisiGo';
 import { TrustGallery } from './components/TrustGallery';
 import { Testimonials } from './components/Testimonials';
 import { Coverage } from './components/Coverage';
@@ -14,6 +13,10 @@ import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
 import { SocialProof } from './components/SocialProof';
+import { FloatingCTA } from './components/FloatingCTA';
+import { ServiceMarquee } from './components/ServiceMarquee';
+import { WhyChooseVisiGoHook } from './components/WhyChooseVisiGoHook';
+import { WhatsAppProof } from './components/WhatsAppProof';
 import { defaultContent } from './constants/content';
 import { Content } from './types';
 
@@ -112,13 +115,16 @@ export default function App() {
 
         <main>
           <Hero content={content.hero} setIsBookingOpen={setIsBookingOpen} />
+          <ServiceMarquee cities={content.coverage.cities} />
           <Problems content={content.problems} />
           <Services content={content.services} />
           <HowItWorks content={content.howItWorks} />
-          <WhyVisiGo content={content.why} />
+          <WhyChooseVisiGoHook />
           <TrustGallery />
+          <WhatsAppProof />
           <Testimonials content={content.testimonials} />
           <Coverage content={content.coverage} />
+          <ServiceMarquee cities={content.coverage.cities} />
           <CTA content={content.cta} setIsBookingOpen={setIsBookingOpen} />
         </main>
 
@@ -127,17 +133,8 @@ export default function App() {
         {/* Social Proof Notifications */}
         <SocialProof />
 
-        {/* Floating WhatsApp Button */}
-        <motion.button
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 1, type: "spring" }}
-          onClick={() => setIsBookingOpen(true)}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-brand-blue hover:bg-brand-blue/90 text-white p-2 sm:p-3 rounded-full shadow-2xl shadow-brand-blue/40 transition-transform hover:scale-110 flex items-center justify-center cursor-pointer"
-          aria-label="Chat WhatsApp"
-        >
-          <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-12 h-12 sm:w-16 sm:h-16 scale-110 sm:scale-125 object-contain" referrerPolicy="no-referrer" />
-        </motion.button>
+        {/* Floating CTA with Pulsating & Urgency Effects */}
+        <FloatingCTA onClick={() => setIsBookingOpen(true)} />
 
         {/* Modals */}
         <BookingModal 

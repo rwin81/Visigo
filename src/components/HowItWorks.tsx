@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Truck, Glasses } from 'lucide-react';
+import { MessageCircle, Calendar, Truck, Eye, Glasses } from 'lucide-react';
 import { FadeIn } from './FadeIn';
 import { formatVisiGoText } from '../lib/formatters';
 import { Content } from '../types';
@@ -19,25 +19,26 @@ export const HowItWorks = ({ content }: HowItWorksProps) => {
           </FadeIn>
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-6xl mx-auto">
           {/* Connecting Line */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-700 -translate-y-1/2 z-0" />
+          <div className="hidden lg:block absolute top-12 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-700 z-0" />
           
-          <div className="grid md:grid-cols-3 gap-12 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4 relative z-10">
             {content.items.map((step, i) => {
-              const Icon = i === 0 ? MessageCircle : i === 1 ? Truck : Glasses;
+              const icons = [MessageCircle, Calendar, Truck, Eye, Glasses];
+              const Icon = icons[i] || MessageCircle;
               return (
                 <div key={i} className="relative flex flex-col items-center text-center">
-                  <FadeIn delay={i * 0.15}>
-                    <div className="w-24 h-24 bg-white dark:bg-slate-800 rounded-full border-4 border-slate-50 dark:border-slate-900 shadow-xl flex items-center justify-center mb-6 relative z-10 mx-auto">
+                  <FadeIn delay={i * 0.1}>
+                    <div className="w-20 h-20 lg:w-24 lg:h-24 bg-white dark:bg-slate-800 rounded-full border-4 border-slate-50 dark:border-slate-900 shadow-xl flex items-center justify-center mb-6 relative z-10 mx-auto group hover:scale-110 transition-transform">
                       <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-green/10" />
-                      <Icon className="w-10 h-10 text-brand-blue relative z-10" />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-brand-green text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                      <Icon className="w-8 h-8 lg:w-10 lg:h-10 text-brand-blue relative z-10" />
+                      <div className="absolute -top-1 -right-1 w-7 h-7 lg:w-8 lg:h-8 bg-brand-green text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
                         {i + 1}
                       </div>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{formatVisiGoText(step.title)}</h3>
-                    <p className="text-slate-600 dark:text-slate-400">{formatVisiGoText(step.desc)}</p>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 leading-tight">{formatVisiGoText(step.title)}</h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 px-2">{formatVisiGoText(step.desc)}</p>
                   </FadeIn>
                 </div>
               );

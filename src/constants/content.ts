@@ -2,23 +2,23 @@ import { Content } from '../types';
 
 export const defaultContent: Content = {
   hero: {
-    badge: "Layanan Mata Era Baru",
+    badge: "1000+ Pelanggan Terbantu",
     title: "Cek Mata Tanpa",
     titleHighlight: "Keluar Rumah",
-    desc: "VisiGo datang langsung ke lokasi Anda. Layanan profesional, tim ahli, dan peralatan lengkap langsung di rumah Anda.",
+    desc: "Praktis, cepat, dan akurat — tanpa antre di optik. Tim Profesional VisiGo Datang ke Lokasi Anda.",
     image: "https://i.ibb.co.com/JwSFKFRL/SPG-JKT.png",
     imagePosition: "center"
   },
   problems: {
     title: "Sering Mengalami Ini?",
-    desc: "Jangan biarkan kesehatan mata Anda terabaikan karena kesibukan.",
+    desc: "Bisa jadi minus atau silinder bertambah tanpa disadari. Jangan biarkan kesehatan mata Anda terabaikan.",
     items: [
-      { title: "Malas ke Optik", desc: "Macet di jalan dan repot mencari parkir." },
-      { title: "Antri Lama", desc: "Menunggu giliran periksa yang membuang waktu berharga Anda." },
-      { title: "Tidak Sempat Cek Mata", desc: "Jadwal kerja padat membuat kesehatan mata dinomorduakan." }
+      { title: "Mata Cepat Lelah", desc: "Terutama saat melihat layar HP atau laptop dalam waktu lama." },
+      { title: "Sering Pusing", desc: "Pusing tanpa sebab yang jelas seringkali dipicu oleh gangguan penglihatan." },
+      { title: "Pandangan Buram", desc: "Mulai kesulitan melihat objek jauh atau tulisan kecil dengan jelas." }
     ],
     solution: {
-      title: "Solusinya: VisiGo Datang ke Rumah Anda!",
+      title: "VisiGo Hadir Sebagai Solusi Modern 👇",
       desc: "Tinggal atur jadwal, tim ahli kami yang akan mengunjungi Anda dengan peralatan lengkap."
     }
   },
@@ -34,11 +34,13 @@ export const defaultContent: Content = {
   },
   howItWorks: {
     title: "Cara Kerja VisiGo",
-    desc: "3 langkah mudah untuk penglihatan yang lebih baik.",
+    desc: "Simple & Cepat. Hanya 5 langkah mudah.",
     items: [
-      { title: "Booking via WhatsApp", desc: "Hubungi kami untuk atur jadwal kunjungan." },
-      { title: "Tim Datang ke Rumah", desc: "Optiker profesional memeriksa mata Anda." },
-      { title: "Kacamata Jadi & Diantar", desc: "Pesanan selesai dan diantar langsung ke tangan Anda." }
+      { title: "1. Chat WhatsApp", desc: "Hubungi kami untuk konsultasi awal." },
+      { title: "2. Pilih Jadwal", desc: "Tentukan waktu kunjungan yang paling nyaman." },
+      { title: "3. Tim Datang", desc: "Tim ahli kami tiba di lokasi Anda tepat waktu." },
+      { title: "4. Pemeriksaan Mata", desc: "Pemeriksaan profesional dengan alat lengkap." },
+      { title: "5. Kacamata Dikirim", desc: "Pesanan selesai dan diantar langsung ke tangan Anda." }
     ]
   },
   why: {
@@ -55,15 +57,15 @@ export const defaultContent: Content = {
       desc: "Membawa standar optik profesional langsung ke ruang keluarga Anda."
     },
     items: [
-      { title: "Tanpa Perlu Keluar Rumah", desc: "Hemat waktu dan tenaga, kami yang datang ke lokasi Anda." },
-      { title: "Tim Profesional & Terlatih", desc: "Pemeriksaan dilakukan oleh optiker bersertifikat resmi." },
-      { title: "Cepat & Praktis", desc: "Proses booking mudah via WhatsApp, layanan tepat waktu." },
-      { title: "Harga Terjangkau", desc: "Kualitas premium dengan harga yang bersahabat." }
+      { title: "Tim Datang ke Rumah/Kantor", desc: "Hemat waktu dan tenaga, kami yang datang ke lokasi Anda." },
+      { title: "Pemeriksaan Profesional", desc: "Pemeriksaan dilakukan oleh optiker bersertifikat resmi." },
+      { title: "Bisa Langsung Pilih Kacamata", desc: "Bawa ratusan pilihan frame langsung ke tempat Anda." },
+      { title: "Praktis & Hemat Waktu", desc: "Proses booking mudah via WhatsApp, layanan tepat waktu." }
     ]
   },
   testimonials: {
     title: "Apa Kata Mereka?",
-    desc: "Cerita pelanggan yang telah merasakan kemudahan VisiGo.",
+    desc: "Sudah dipercaya 1000+ pelanggan untuk kesehatan mata mereka.",
     items: [
       { name: "Budi Santoso", city: "Tuban", text: "Sangat praktis! Nggak perlu macet-macetan ke mall. Optikernya ramah dan alatnya canggih banget.", avatar: "https://i.pravatar.cc/150?u=budi" },
       { name: "Siti Aminah", city: "Bojonegoro", text: "Pilihan frame-nya banyak dan kekinian. Kacamata diantar tepat waktu dan pas banget dipakai.", avatar: "https://i.pravatar.cc/150?u=siti" },

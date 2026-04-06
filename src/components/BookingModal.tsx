@@ -335,6 +335,19 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       </>
                     )}
                   </button>
+
+                  <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Malas isi form? Chat admin langsung aja:</p>
+                    <a 
+                      href={`https://wa.me/${content.whatsappNumber}?text=Halo VisiGo, saya ingin tanya-tanya tentang layanan/produk.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-brand-blue dark:text-brand-cyan font-bold hover:underline"
+                    >
+                      <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-5 h-5" referrerPolicy="no-referrer" />
+                      Chat Admin Sekarang
+                    </a>
+                  </div>
                 </form>
               )}
               <p className="text-[10px] text-center text-slate-400 dark:text-slate-500 mt-4">
