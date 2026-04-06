@@ -42,7 +42,11 @@ const hooks = [
   }
 ];
 
-export const WhyChooseVisiGoHook = () => {
+interface WhyChooseVisiGoHookProps {
+  setIsBookingOpen: (val: boolean) => void;
+}
+
+export const WhyChooseVisiGoHook = ({ setIsBookingOpen }: WhyChooseVisiGoHookProps) => {
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-900/30 overflow-hidden relative">
       {/* Background Decorations */}
@@ -90,7 +94,8 @@ export const WhyChooseVisiGoHook = () => {
               viewport={{ once: true }}
               transition={{ delay: hook.delay, duration: 0.5 }}
               whileHover={{ y: -10 }}
-              className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 group relative overflow-hidden"
+              onClick={() => setIsBookingOpen(true)}
+              className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 group relative overflow-hidden cursor-pointer"
             >
               {/* Hover Glow */}
               <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500 ${hook.color}`} />
@@ -107,7 +112,7 @@ export const WhyChooseVisiGoHook = () => {
                 {hook.desc}
               </p>
 
-              <div className="mt-6 flex items-center gap-2 text-brand-blue font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="mt-6 flex items-center gap-2 text-brand-blue font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity group-hover:translate-x-2 duration-300">
                 <Zap className="w-4 h-4 fill-brand-blue" />
                 Solusi Terbaik
               </div>

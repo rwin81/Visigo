@@ -5,9 +5,10 @@ import { Content } from '../types';
 
 interface CoverageProps {
   content: Content['coverage'];
+  setIsBookingOpen: (val: boolean) => void;
 }
 
-export const Coverage = ({ content }: CoverageProps) => {
+export const Coverage = ({ content, setIsBookingOpen }: CoverageProps) => {
   return (
     <section className="py-24 bg-white dark:bg-slate-950 border-y border-slate-200 dark:border-slate-800 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,9 +23,13 @@ export const Coverage = ({ content }: CoverageProps) => {
             </p>
             <div className="flex flex-wrap gap-3">
               {content.cities.map(c => c.trim()).filter(c => c !== '').map((city, i) => (
-                <span key={i} className="bg-white dark:bg-slate-800 px-4 py-2 rounded-full text-brand-blue dark:text-brand-cyan font-semibold border border-slate-200 dark:border-slate-700 shadow-sm">
+                <button 
+                  key={i} 
+                  onClick={() => setIsBookingOpen(true)}
+                  className="bg-white dark:bg-slate-800 px-4 py-2 rounded-full text-brand-blue dark:text-brand-cyan font-semibold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-brand-blue hover:text-white dark:hover:bg-brand-blue transition-all hover:scale-110 active:scale-95"
+                >
                   {city}
-                </span>
+                </button>
               ))}
             </div>
           </div>

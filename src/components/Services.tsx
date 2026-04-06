@@ -6,9 +6,10 @@ import { Content } from '../types';
 
 interface ServicesProps {
   content: Content['services'];
+  setIsBookingOpen: (val: boolean) => void;
 }
 
-export const Services = ({ content }: ServicesProps) => {
+export const Services = ({ content, setIsBookingOpen }: ServicesProps) => {
   return (
     <section id="layanan" className="py-24 bg-white dark:bg-slate-950 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,14 +26,21 @@ export const Services = ({ content }: ServicesProps) => {
             return (
               <div key={i}>
                 <FadeIn delay={i * 0.1}>
-                  <div className="group bg-slate-50 dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-brand-blue/10 transition-all duration-300 relative overflow-hidden h-full">
+                  <div 
+                    onClick={() => setIsBookingOpen(true)}
+                    className="group bg-slate-50 dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-brand-blue/10 transition-all duration-300 relative overflow-hidden h-full cursor-pointer hover:-translate-y-2"
+                  >
                     <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative z-10">
+                    <div className="relative z-10 flex flex-col h-full">
                       <div className="bg-brand-blue/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors text-brand-blue">
                         <Icon className="w-7 h-7" />
                       </div>
                       <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{formatVisiGoText(service.title)}</h3>
-                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{formatVisiGoText(service.desc)}</p>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">{formatVisiGoText(service.desc)}</p>
+                      
+                      <div className="mt-auto text-brand-blue font-bold text-sm uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                        Pesan Sekarang <span className="text-lg">→</span>
+                      </div>
                     </div>
                   </div>
                 </FadeIn>

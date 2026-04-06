@@ -115,16 +115,16 @@ export default function App() {
 
         <main>
           <Hero content={content.hero} setIsBookingOpen={setIsBookingOpen} />
-          <ServiceMarquee cities={content.coverage.cities} />
-          <Problems content={content.problems} />
-          <Services content={content.services} />
+          <ServiceMarquee cities={content.coverage.cities} setIsBookingOpen={setIsBookingOpen} />
+          <Problems content={content.problems} setIsBookingOpen={setIsBookingOpen} />
+          <Services content={content.services} setIsBookingOpen={setIsBookingOpen} />
           <HowItWorks content={content.howItWorks} />
-          <WhyChooseVisiGoHook />
+          <WhyChooseVisiGoHook setIsBookingOpen={setIsBookingOpen} />
           <TrustGallery />
           <WhatsAppProof />
           <Testimonials content={content.testimonials} />
-          <Coverage content={content.coverage} />
-          <ServiceMarquee cities={content.coverage.cities} />
+          <Coverage content={content.coverage} setIsBookingOpen={setIsBookingOpen} />
+          <ServiceMarquee cities={content.coverage.cities} setIsBookingOpen={setIsBookingOpen} />
           <CTA content={content.cta} setIsBookingOpen={setIsBookingOpen} />
         </main>
 

@@ -4,9 +4,10 @@ import { MapPin } from 'lucide-react';
 
 interface ServiceMarqueeProps {
   cities: string[];
+  setIsBookingOpen: (val: boolean) => void;
 }
 
-export const ServiceMarquee = ({ cities }: ServiceMarqueeProps) => {
+export const ServiceMarquee = ({ cities, setIsBookingOpen }: ServiceMarqueeProps) => {
   // Duplicate cities to ensure smooth infinite scroll
   const displayCities = [...cities, ...cities, ...cities, ...cities];
 
@@ -32,7 +33,11 @@ export const ServiceMarquee = ({ cities }: ServiceMarqueeProps) => {
         className="flex items-center gap-16 whitespace-nowrap relative z-10"
       >
         {displayCities.map((city, i) => (
-          <div key={i} className="flex items-center gap-4 group/item cursor-default">
+          <div 
+            key={i} 
+            onClick={() => setIsBookingOpen(true)}
+            className="flex items-center gap-4 group/item cursor-pointer hover:scale-110 transition-transform"
+          >
             <div className="relative">
               <div className="absolute inset-0 bg-brand-green blur-md opacity-50 group-hover/item:opacity-100 transition-opacity" />
               <MapPin className="w-5 h-5 text-brand-green relative z-10" />
