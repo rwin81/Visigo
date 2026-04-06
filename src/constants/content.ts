@@ -97,7 +97,7 @@ export const defaultContent: Content = {
   },
   googleSheetUrl: import.meta.env.VITE_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbxp1EwSgmyghgr51BJs5ysNHRxxwA7I95JgczoX4Ra3uxoQa6IURPYZj28zkjr4XkFa/exec",
   logoUrl: "https://i.ibb.co/FLfp65gD/VISIGO-LOGO.png",
-  whatsappNumber: "6285232730855",
+  whatsappNumber: "6281296921892",
   socialLinks: {
     instagram: "https://www.instagram.com/visigo.homeeyecare?igsh=MWt0bGwzYm5xYnB0NA%3D%3D&utm_source=qr",
     facebook: "https://www.facebook.com/share/1E7UmGBB3F/?mibextid=wwXIfr",
