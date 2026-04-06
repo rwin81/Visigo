@@ -22,6 +22,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     branch: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [generatedWaLink, setGeneratedWaLink] = useState('');
 
   // Reset form when modal closes
   React.useEffect(() => {
@@ -33,6 +34,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
 
   const resetForm = () => {
     setStep('selection');
+    setGeneratedWaLink('');
     setFormData({
       name: '',
       phone: '',
@@ -74,12 +76,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       const waLink = formatWhatsAppLink(formData.phone);
       
       // 1. Save to Google Sheet if URL is provided
-      // Note: This requires a Google Apps Script Web App set up to receive POST requests
       if (content.googleSheetUrl) {
         const payload = {
           ...formData,
-          // We send the hyperlink formula in the 'phone' field so it works 
-          // directly with your existing Apps Script (data.phone)
           phone: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
           whatsapp_link: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
           type: type, 
@@ -100,22 +99,34 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       let message = '';
       
       if (step === 'booking') {
-        message = `Halo VisiGo, saya ingin booking layanan:%0A%0ANama: ${formData.name}%0ANo. WA: ${formData.phone}%0AAlamat: ${formData.address}%0ALayanan: ${formData.service}%0A%0AMohon info jadwal yang tersedia. Terima kasih.`;
+        message = `*BOOKING LAYANAN VISIGO*%0A%0A` +
+                  `*Nama:* ${formData.name}%0A` +
+                  `*No. WA:* ${formData.phone}%0A` +
+                  `*Alamat:* ${formData.address}%0A` +
+                  `*Layanan:* ${formData.service}%0A%0A` +
+                  `Mohon info jadwal yang tersedia. Terima kasih.`;
       } else {
-        message = `Halo VisiGo, saya ingin order produk:%0A%0ANama: ${formData.name}%0ANo. WA: ${formData.phone}%0AAlamat: ${formData.address}%0AProduk: ${formData.product}%0AKeterangan: ${formData.description}%0AReferensi: ${formData.reference}%0ACabang: ${formData.branch}%0A%0AMohon info ketersediaan stok. Terima kasih.`;
+        message = `*ORDER PRODUK VISIGO*%0A%0A` +
+                  `*Nama:* ${formData.name}%0A` +
+                  `*No. WA:* ${formData.phone}%0A` +
+                  `*Alamat:* ${formData.address}%0A` +
+                  `*Produk:* ${formData.product}%0A` +
+                  `*Keterangan:* ${formData.description || '-'}%0A` +
+                  `*Referensi:* ${formData.reference || '-'}%0A` +
+                  `*Cabang:* ${formData.branch || '-'}%0A%0A` +
+                  `Mohon info ketersediaan stok. Terima kasih.`;
       }
       
+      const finalWaUrl = `https://wa.me/${content.whatsappNumber}?text=${message}`;
+      setGeneratedWaLink(finalWaUrl);
+      
       // 3. Open WhatsApp to Admin
-      window.open(`https://wa.me/${content.whatsappNumber}?text=${message}`, '_blank');
+      // Use a small timeout to ensure state is updated and try to bypass popup blockers
+      window.open(finalWaUrl, '_blank');
       
       // 4. Show Success Step
       setStep('success');
       
-      // Auto close after 5 seconds
-      setTimeout(() => {
-        if (isOpen) onClose();
-      }, 5000);
-
     } catch (error) {
       console.error("Error submitting:", error);
       alert("Terjadi kesalahan saat mengirim data. Silakan coba lagi.");
@@ -203,14 +214,27 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   </div>
                   <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Terima Kasih, {formData.name}!</h4>
                   <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                    Booking Anda telah kami terima. Tim VisiGo akan segera menghubungi Anda melalui WhatsApp untuk konfirmasi jadwal.
+                    Data Anda telah tersimpan di sistem kami. Silakan klik tombol di bawah jika WhatsApp tidak terbuka otomatis untuk mengirim detail pesanan ke admin.
                   </p>
-                  <button 
-                    onClick={onClose}
-                    className="w-full py-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
-                  >
-                    Tutup
-                  </button>
+                  
+                  <div className="space-y-3">
+                    <a 
+                      href={generatedWaLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-4 bg-brand-green text-white rounded-xl font-bold hover:bg-brand-green/90 transition-all flex items-center justify-center gap-2 shadow-lg"
+                    >
+                      <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-6 h-6" referrerPolicy="no-referrer" />
+                      Kirim Ulang via WhatsApp
+                    </a>
+                    
+                    <button 
+                      onClick={onClose}
+                      className="w-full py-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                    >
+                      Selesai
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
