@@ -175,21 +175,6 @@ export const Hero = ({ content, setIsBookingOpen }: HeroProps) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent" />
               
-              {/* Floating Badge */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1 }}
-                className="absolute bottom-8 left-8 right-8 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md p-4 rounded-2xl border border-white/20 flex items-center gap-4"
-              >
-                <div className="bg-brand-green/20 dark:bg-brand-green/30 p-3 rounded-full">
-                  <CheckCircle2 className="w-6 h-6 text-brand-green" />
-                </div>
-                <div>
-                  <p className="font-bold text-slate-900 dark:text-white">Hasil Akurat</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Peralatan standar optik profesional</p>
-                </div>
-              </motion.div>
             </motion.div>
 
             {/* Decorative Elements */}
