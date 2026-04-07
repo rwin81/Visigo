@@ -21,6 +21,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     reference: '',
     branch: ''
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generatedWaLink, setGeneratedWaLink] = useState('');
 
@@ -35,6 +36,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
   const resetForm = () => {
     setStep('selection');
     setGeneratedWaLink('');
+    setSelectedFile(null);
     setFormData({
       name: '',
       phone: '',
@@ -73,55 +75,121 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
 
     try {
       const type = step === 'booking' ? 'Booking Layanan' : 'Order Produk';
-      const waLink = formatWhatsAppLink(formData.phone);
+      const waBase = formatWhatsAppLink(formData.phone);
+      const cleanedPhone = waBase.split('/').pop();
+      
+      // Handle File Upload if exists
+      let filePayload = null;
+      if (selectedFile) {
+        const base64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(selectedFile);
+        });
+        filePayload = {
+          base64: base64.split(',')[1],
+          type: selectedFile.type,
+          name: selectedFile.name
+        };
+      }
+
+      // Manual URL Encoding for Emojis to ensure they survive the transport to Google Sheets
+      const waveEnc = "%F0%9F%91%8B";
+      const glassesEnc = "%F0%9F%91%93";
+      const calendarEnc = "%F0%9F%93%85";
+      const sparklesEnc = "%E2%9C%A8";
+      const heartEnc = "%F0%9F%92%96";
+      
+      const encodeText = (text: string) => encodeURIComponent(text).replace(/%20/g, '+');
+      
+      // 1. Template for Initial Confirmation (Current)
+      let waLinkForSheet = '';
+      if (step === 'booking') {
+        const text = `https://api.whatsapp.com/send?phone=${cleanedPhone}&text=Halo+kak+${encodeText(formData.name)},+saya+Admin+VisiGo+${waveEnc}+Terima+kasih+sudah+booking+layanan+${encodeText(formData.service)}+${glassesEnc}+Kapan+waktu+yang+pas+untuk+kami+kunjungi?+${calendarEnc}`;
+        waLinkForSheet = `=HYPERLINK("${text}", "Chat ${formData.name}")`;
+      } else {
+        const text = `https://api.whatsapp.com/send?phone=${cleanedPhone}&text=Halo+kak+${encodeText(formData.name)},+saya+Admin+VisiGo+${waveEnc}+Terima+kasih+sudah+order+${encodeText(formData.product)}+${glassesEnc}+Pesanan+Anda+sedang+kami+proses+ya.+${sparklesEnc}`;
+        waLinkForSheet = `=HYPERLINK("${text}", "Chat ${formData.name}")`;
+      }
+
+      // 2. Template for Follow-up Reminder (3 months later)
+      const followUpMsg = `Halo+kak+${encodeText(formData.name)},+apa+kabar?+${waveEnc}+Sudah+3+bulan+nih+sejak+kunjungan/order+terakhir+di+VisiGo.+Yuk+jadwalkan+cek+mata+rutin+lagi+supaya+mata+tetap+sehat+dan+nyaman+${glassesEnc}+${heartEnc}`;
+      const waFollowUpLink = `=HYPERLINK("https://api.whatsapp.com/send?phone=${cleanedPhone}&text=${followUpMsg}", "Kirim Pengingat")`;
+
+      // 3. Calculate Next Check Date (Today + 3 Months)
+      const nextDate = new Date();
+      nextDate.setMonth(nextDate.getMonth() + 3);
+      const nextCheckDateStr = nextDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
       
       // 1. Save to Google Sheet if URL is provided
       if (content.googleSheetUrl) {
         const payload = {
-          ...formData,
-          phone: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
-          whatsapp_link: `=HYPERLINK("${waLink}", "Chat ${formData.name}")`,
-          type: type, 
-          timestamp: new Date().toLocaleString('id-ID')
+          timestamp: new Date().toLocaleString('id-ID'),
+          name: formData.name,
+          phone_raw: formData.phone,
+          phone: waLinkForSheet, // Compatibility for old script (WhatsApp column)
+          address: formData.address,
+          type: type,
+          service_product: step === 'booking' ? (formData.service || "-") : (formData.product || "-"),
+          service: formData.service || "-", // Compatibility for old script
+          product: formData.product || "-", // Compatibility for old script
+          description: formData.description || '-',
+          reference: formData.reference || '-',
+          branch: formData.branch || '-',
+          whatsapp_link: waLinkForSheet,
+          wa_followup: waFollowUpLink,
+          next_check_date: nextCheckDateStr,
+          followup_status: "Belum Diingatkan",
+          file: filePayload // Send file data to script
         };
 
-        await fetch(content.googleSheetUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'text/plain',
-          },
-          body: JSON.stringify(payload),
-        });
+        try {
+          console.log("Sending data to Google Sheet:", payload);
+          // We use no-cors because Google Apps Script doesn't support CORS headers
+          // We wrap it in try-catch so even if it fails, the user can still proceed to WhatsApp
+          fetch(content.googleSheetUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: {
+              'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(payload),
+          })
+          .then(() => console.log("Data sent to Google Sheet (no-cors mode)"))
+          .catch(err => console.error("Sheet sync background error:", err));
+        } catch (sheetError) {
+          console.error('Google Sheet sync failed to initiate:', sheetError);
+        }
       }
 
-      // 2. Prepare WhatsApp Message for Admin
-      let message = '';
+      // 2. Prepare WhatsApp Message for Admin (Customer sends to Admin)
+      let messageText = '';
       
       if (step === 'booking') {
-        message = `*BOOKING LAYANAN VISIGO*%0A%0A` +
-                  `*Nama:* ${formData.name}%0A` +
-                  `*No. WA:* ${formData.phone}%0A` +
-                  `*Alamat:* ${formData.address}%0A` +
-                  `*Layanan:* ${formData.service}%0A%0A` +
-                  `Mohon info jadwal yang tersedia. Terima kasih.`;
+        messageText = `*BOOKING LAYANAN VISIGO*\n\n` +
+                      `*Nama:* ${formData.name}\n` +
+                      `*No. WA:* ${formData.phone}\n` +
+                      `*Alamat:* ${formData.address}\n` +
+                      `*Layanan:* ${formData.service}\n\n` +
+                      `Mohon info jadwal yang tersedia. Terima kasih!`;
       } else {
-        message = `*ORDER PRODUK VISIGO*%0A%0A` +
-                  `*Nama:* ${formData.name}%0A` +
-                  `*No. WA:* ${formData.phone}%0A` +
-                  `*Alamat:* ${formData.address}%0A` +
-                  `*Produk:* ${formData.product}%0A` +
-                  `*Keterangan:* ${formData.description || '-'}%0A` +
-                  `*Referensi:* ${formData.reference || '-'}%0A` +
-                  `*Cabang:* ${formData.branch || '-'}%0A%0A` +
-                  `Mohon info ketersediaan stok. Terima kasih.`;
+        messageText = `*ORDER PRODUK VISIGO*\n\n` +
+                      `*Nama:* ${formData.name}\n` +
+                      `*No. WA:* ${formData.phone}\n` +
+                      `*Alamat:* ${formData.address}\n` +
+                      `*Produk:* ${formData.product}\n` +
+                      `*Keterangan:* ${formData.description || '-'}\n` +
+                      `*Referensi:* ${formData.reference || '-'}\n` +
+                      `*Cabang:* ${formData.branch || '-'}\n\n` +
+                      `Mohon info ketersediaan stok. Terima kasih!`;
       }
       
-      const finalWaUrl = `https://wa.me/${content.whatsappNumber}?text=${message}`;
+      // Use encodeURIComponent for the whole message to handle emojis correctly
+      const finalWaUrl = `https://wa.me/${content.whatsappNumber}?text=${encodeURIComponent(messageText)}`;
       setGeneratedWaLink(finalWaUrl);
       
       // 3. Open WhatsApp to Admin
-      // Use a small timeout to ensure state is updated and try to bypass popup blockers
       window.open(finalWaUrl, '_blank');
       
       // 4. Show Success Step
@@ -212,9 +280,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   <div className="w-20 h-20 bg-brand-green/10 text-brand-green rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
                   </div>
-                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Terima Kasih, {formData.name}!</h4>
+                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Terima Kasih, kak {formData.name}! ✨</h4>
                   <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                    Data Anda telah tersimpan di sistem kami. Silakan klik tombol di bawah jika WhatsApp tidak terbuka otomatis untuk mengirim detail pesanan ke admin.
+                    Data Anda telah tersimpan di sistem kami. Silakan klik tombol di bawah jika WhatsApp tidak terbuka otomatis untuk mengirim detail pesanan ke admin. 🚀
                   </p>
                   
                   <div className="space-y-3">
@@ -317,6 +385,27 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                           rows={2}
                         />
                       </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Foto Resep (Opsional)</label>
+                        <div className="relative">
+                          <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
+                            className="hidden" 
+                            id="prescription-upload"
+                          />
+                          <label 
+                            htmlFor="prescription-upload"
+                            className="w-full px-4 py-3 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:border-brand-green hover:text-brand-green transition-all cursor-pointer flex items-center justify-center gap-2"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            {selectedFile ? selectedFile.name : "Upload Foto Resep"}
+                          </label>
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Referensi</label>
