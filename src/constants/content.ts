@@ -96,7 +96,7 @@ export const defaultContent: Content = {
     desc: "Jangan tunda lagi. Jadwalkan pemeriksaan mata Anda sekarang dan nikmati layanan optik profesional di rumah."
   },
   googleSheetUrl: "https://script.google.com/macros/s/AKfycbxvPL8EjfxDZxxBlZaKVVZO_RfH444TLCFW5cRT2r4QDhZGzsVjVrYy_m-O8s_7qrVWZg/exec",
-  logoUrl: "https://i.ibb.co/FLfp65gD/VISIGO-LOGO.png",
+  logoUrl: "https://i.ibb.co.com/WNvxR9Kw/VISIGO-LOGO.png",
   whatsappNumber: "6281296921892",
   socialLinks: {
     instagram: "https://www.instagram.com/visigo.homeeyecare?igsh=MWt0bGwzYm5xYnB0NA%3D%3D&utm_source=qr",

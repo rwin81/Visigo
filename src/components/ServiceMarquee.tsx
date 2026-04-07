@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { MapPin } from 'lucide-react';
 
 interface ServiceMarqueeProps {
   cities: string[];
+  logoUrl: string;
   setIsBookingOpen: (val: boolean) => void;
 }
 
-export const ServiceMarquee = ({ cities, setIsBookingOpen }: ServiceMarqueeProps) => {
+export const ServiceMarquee = ({ cities, logoUrl, setIsBookingOpen }: ServiceMarqueeProps) => {
   // Duplicate cities to ensure smooth infinite scroll
   const displayCities = [...cities, ...cities, ...cities, ...cities];
 
@@ -38,9 +38,23 @@ export const ServiceMarquee = ({ cities, setIsBookingOpen }: ServiceMarqueeProps
             onClick={() => setIsBookingOpen(true)}
             className="flex items-center gap-4 group/item cursor-pointer hover:scale-110 transition-transform"
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-brand-green blur-md opacity-50 group-hover/item:opacity-100 transition-opacity" />
-              <MapPin className="w-5 h-5 text-brand-green relative z-10" />
+            <div className="relative flex items-center justify-center">
+              <div className="absolute inset-0 bg-white/30 blur-lg rounded-full" />
+              <div className="bg-white p-1.5 rounded-lg shadow-xl relative z-10 flex items-center justify-center min-w-[50px] h-10 overflow-hidden">
+                <img 
+                  src={logoUrl} 
+                  alt="VisiGo" 
+                  className="h-7 w-auto object-contain" 
+                  referrerPolicy="no-referrer"
+                  style={{ display: 'block' }}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (!target.src.includes('icons8')) {
+                      target.src = "https://img.icons8.com/color/96/glasses.png";
+                    }
+                  }}
+                />
+              </div>
             </div>
             <span className="text-white font-black text-base tracking-[0.2em] uppercase flex items-center gap-2 drop-shadow-lg">
               {city}
