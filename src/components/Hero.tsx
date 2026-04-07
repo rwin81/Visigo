@@ -59,17 +59,17 @@ export const Hero = ({ content, setIsBookingOpen }: HeroProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-8xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1] sm:leading-[1.05] mb-6 sm:mb-8"
+              className="text-5xl sm:text-6xl lg:text-8xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.05] mb-8"
             >
               {formatVisiGoText(content.title)} <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-green">{formatVisiGoText(content.titleHighlight)}</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-cyan to-brand-green">{formatVisiGoText(content.titleHighlight)}</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 mb-8 sm:mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0"
+              className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-400 mb-12 leading-relaxed max-w-xl mx-auto lg:mx-0"
             >
               {formatVisiGoText(content.desc)}
             </motion.p>
@@ -82,7 +82,7 @@ export const Hero = ({ content, setIsBookingOpen }: HeroProps) => {
             >
               <button 
                 onClick={() => setIsBookingOpen(true)}
-                className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-brand-blue hover:bg-brand-blue/90 text-white rounded-2xl font-black text-lg sm:text-xl transition-all shadow-2xl shadow-brand-blue/30 hover:shadow-brand-blue/50 hover:scale-105 flex items-center justify-center gap-3 group"
+                className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-brand-blue to-brand-cyan hover:from-brand-cyan hover:to-brand-green text-white rounded-2xl font-black text-lg sm:text-xl transition-all shadow-2xl shadow-brand-blue/30 hover:shadow-brand-green/40 hover:scale-105 flex items-center justify-center gap-3 group"
               >
                 <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-6 h-6 sm:w-8 sm:h-8 group-hover:rotate-12 transition-transform" referrerPolicy="no-referrer" />
                 BOOKING SEKARANG VIA WHATSAPP

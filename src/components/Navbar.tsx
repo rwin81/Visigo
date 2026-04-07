@@ -45,40 +45,40 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex items-center gap-2 bg-white/80 dark:bg-white p-1.5 pr-3 rounded-2xl shadow-sm border border-slate-100 dark:border-white/20">
-            <Logo className="h-8 sm:h-10 w-auto" logoUrl={logoUrl} />
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 transition-all duration-500">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
+        <div className="flex justify-between items-center h-24">
+          <div className="flex items-center gap-3">
+            <Logo className="h-10 sm:h-12 w-auto" logoUrl={logoUrl} />
           </div>
           
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
               <a 
                 key={link.name}
                 href={link.href} 
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-slate-600 dark:text-slate-300 hover:text-brand-blue dark:hover:text-brand-cyan font-medium transition-colors"
+                className="text-slate-600 dark:text-slate-300 hover:text-brand-cyan dark:hover:text-brand-cyan font-extrabold text-sm uppercase tracking-[0.2em] transition-all hover:scale-105"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-4 sm:gap-6">
             <button 
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+              className="p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all hover:rotate-12"
               aria-label="Toggle Dark Mode"
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
             </button>
             
             <button 
               onClick={() => setIsBookingOpen(true)}
-              className="flex items-center gap-2 bg-brand-blue hover:bg-brand-blue/90 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-bold transition-all shadow-lg shadow-brand-blue/20 hover:shadow-brand-blue/40 text-sm sm:text-base whitespace-nowrap"
+              className="hidden sm:flex items-center gap-3 bg-gradient-to-r from-brand-blue to-brand-cyan hover:from-brand-cyan hover:to-brand-green text-white px-8 py-3.5 rounded-2xl font-black transition-all shadow-xl shadow-brand-cyan/20 hover:shadow-brand-green/40 text-base whitespace-nowrap hover:scale-105"
             >
-              <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-5 h-5 sm:w-6 sm:h-6" referrerPolicy="no-referrer" />
+              <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-6 h-6" referrerPolicy="no-referrer" loading="lazy" />
               <span>Booking Sekarang</span>
             </button>
 

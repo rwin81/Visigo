@@ -46,29 +46,29 @@ export const WhatsAppProof = () => {
   return (
     <section className="py-24 bg-white dark:bg-slate-950 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
-              💬 <span className="text-brand-blue">WhatsApp</span> Chat Real
+            <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-8">
+              💬 <span className="text-brand-cyan">WhatsApp</span> Chat Real
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
               Lihat bagaimana antusiasme pelanggan kami setiap harinya. Ratusan chat masuk untuk booking dan konsultasi.
             </p>
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {chats.map((chat, i) => (
             <FadeIn key={i} delay={i * 0.1}>
-              <div className="bg-[#e5ddd5] dark:bg-[#0d1418] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group hover:shadow-xl transition-all duration-300">
+              <div className="bg-[#e5ddd5] dark:bg-[#0d1418] rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden group transition-all duration-500">
                 {/* WhatsApp Header Style */}
-                <div className="flex items-center gap-3 mb-4 border-b border-slate-300/50 dark:border-slate-800 pb-3">
-                  <div className="w-10 h-10 rounded-full bg-brand-green/20 flex items-center justify-center text-brand-green">
-                    <MessageCircle className="w-5 h-5" />
+                <div className="flex items-center gap-4 mb-6 border-b border-slate-300/50 dark:border-slate-800 pb-4">
+                  <div className="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center text-brand-green">
+                    <MessageCircle className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white text-sm">{chat.name}</h4>
-                    <p className="text-[10px] text-brand-green font-bold uppercase tracking-widest">Online</p>
+                    <h4 className="font-extrabold text-slate-900 dark:text-white text-base">{chat.name}</h4>
+                    <p className="text-xs text-brand-green font-bold uppercase tracking-widest">Online</p>
                   </div>
                 </div>
 

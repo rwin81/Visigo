@@ -13,14 +13,14 @@ export const Services = ({ content, setIsBookingOpen }: ServicesProps) => {
   return (
     <section id="layanan" className="py-24 bg-white dark:bg-slate-950 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-20">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">{formatVisiGoText(content.title)}</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400">{formatVisiGoText(content.desc)}</p>
+            <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-8">{formatVisiGoText(content.title)}</h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">{formatVisiGoText(content.desc)}</p>
           </FadeIn>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {content.items.map((service, i) => {
             const Icon = i === 0 ? Eye : i === 1 ? Glasses : i === 2 ? Building : GraduationCap;
             return (
@@ -28,18 +28,18 @@ export const Services = ({ content, setIsBookingOpen }: ServicesProps) => {
                 <FadeIn delay={i * 0.1}>
                   <div 
                     onClick={() => setIsBookingOpen(true)}
-                    className="group bg-slate-50 dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:shadow-brand-blue/10 transition-all duration-300 relative overflow-hidden h-full cursor-pointer hover:-translate-y-2"
+                    className="group bg-slate-50 dark:bg-slate-900 p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 hover:shadow-brand-blue/10 transition-all duration-500 relative overflow-hidden h-full cursor-pointer hover:-translate-y-3"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative z-10 flex flex-col h-full">
-                      <div className="bg-brand-blue/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors text-brand-blue">
-                        <Icon className="w-7 h-7" />
+                      <div className="bg-brand-cyan/10 w-16 h-16 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-brand-cyan group-hover:text-white transition-all duration-500 text-brand-cyan">
+                        <Icon className="w-8 h-8" />
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{formatVisiGoText(service.title)}</h3>
-                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">{formatVisiGoText(service.desc)}</p>
+                      <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-4 leading-tight">{formatVisiGoText(service.title)}</h3>
+                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-8 text-lg">{formatVisiGoText(service.desc)}</p>
                       
-                      <div className="mt-auto text-brand-blue font-bold text-sm uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-                        Pesan Sekarang <span className="text-lg">→</span>
+                      <div className="mt-auto text-brand-cyan font-extrabold text-sm uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+                        Pesan Sekarang <span className="text-xl">→</span>
                       </div>
                     </div>
                   </div>

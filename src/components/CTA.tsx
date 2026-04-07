@@ -30,20 +30,20 @@ export const CTA = ({ content, setIsBookingOpen }: CTAProps) => {
               SIAP MELAYANI ANDA
             </div>
             
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-[1.1] tracking-tight">
+            <h2 className="text-5xl md:text-7xl font-extrabold text-white mb-10 leading-[1.05] tracking-tight">
               {formatVisiGoText(content.title)}
             </h2>
             
-            <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-300 mb-16 max-w-3xl mx-auto leading-relaxed">
               {formatVisiGoText(content.desc)}
             </p>
             
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center gap-10">
               <button 
                 onClick={() => setIsBookingOpen(true)}
-                className="w-full sm:w-auto bg-brand-blue hover:bg-brand-blue/90 text-white px-12 py-6 rounded-2xl font-black text-2xl transition-all shadow-2xl shadow-brand-blue/40 hover:shadow-brand-blue/60 hover:scale-105 flex items-center justify-center gap-4 group"
+                className="w-full sm:w-auto bg-gradient-to-r from-brand-blue via-brand-cyan to-brand-green hover:from-brand-green hover:to-brand-blue text-white px-16 py-8 rounded-[2rem] font-black text-2xl transition-all shadow-2xl shadow-brand-cyan/40 hover:shadow-brand-green/60 hover:scale-105 flex items-center justify-center gap-6 group"
               >
-                <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-10 h-10 group-hover:rotate-12 transition-transform" referrerPolicy="no-referrer" loading="lazy" />
+                <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-12 h-12 group-hover:rotate-12 transition-transform" referrerPolicy="no-referrer" loading="lazy" />
                 BOOKING SEKARANG
               </button>
               

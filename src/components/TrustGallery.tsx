@@ -30,33 +30,33 @@ export const TrustGallery = () => {
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-900/30 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
-              Aktivitas Lapangan & <span className="text-brand-blue">Real Photos</span>
+            <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-8">
+              Aktivitas Lapangan & <span className="text-brand-cyan">Real Photos</span>
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
               Lihat bagaimana tim profesional VisiGo melayani ribuan customer di seluruh Indonesia dengan standar kualitas tinggi.
             </p>
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {images.map((img, i) => (
             <FadeIn key={i} delay={i * 0.1}>
-              <div className="group relative rounded-3xl overflow-hidden shadow-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 h-full">
-                <div className="aspect-video sm:aspect-[4/3] overflow-hidden">
+              <div className="group relative rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-none bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 h-full flex flex-col">
+                <div className="aspect-[4/5] overflow-hidden">
                   <img 
                     src={img.url} 
                     alt={img.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     referrerPolicy="no-referrer"
                     loading="lazy"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="font-bold text-slate-900 dark:text-white text-lg mb-2">{img.title}</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{img.desc}</p>
+                <div className="p-8 flex-grow">
+                  <h3 className="font-extrabold text-slate-900 dark:text-white text-xl mb-3">{img.title}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{img.desc}</p>
                 </div>
                 <div className="absolute top-4 left-4">
                   <div className="bg-brand-blue/90 text-white text-[10px] font-bold px-3 py-1 rounded-full backdrop-blur-sm">

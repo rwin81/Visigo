@@ -59,7 +59,7 @@ export const FloatingCTA = ({ onClick }: FloatingCTAProps) => {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute inset-0 bg-brand-blue rounded-full blur-md"
+          className="absolute inset-0 bg-brand-cyan rounded-full blur-md"
         />
         <motion.div
           animate={{
@@ -88,7 +88,7 @@ export const FloatingCTA = ({ onClick }: FloatingCTAProps) => {
             ease: "easeInOut",
           }}
           onClick={onClick}
-          className="relative z-10 bg-brand-blue hover:bg-brand-blue/90 text-white p-4 sm:p-5 rounded-full shadow-2xl shadow-brand-blue/50 flex items-center justify-center group overflow-hidden"
+          className="relative z-10 bg-gradient-to-br from-brand-blue via-brand-cyan to-brand-green p-4 sm:p-5 rounded-full shadow-2xl shadow-brand-blue/50 flex items-center justify-center group overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           

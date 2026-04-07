@@ -60,24 +60,24 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
   };
 
   const TestimonialCard = ({ testi, index }: { testi: any, index: number }) => (
-    <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm h-full flex flex-col transition-transform hover:scale-[1.02] duration-300">
-      <div className="flex gap-1 mb-6">
+    <div className="bg-white dark:bg-slate-800 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-2xl shadow-slate-200/50 dark:shadow-none h-full flex flex-col transition-all hover:scale-[1.02] duration-300">
+      <div className="flex gap-1.5 mb-8">
         {[...Array(5)].map((_, j) => (
-          <Star key={j} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+          <Star key={j} className="w-5 h-5 fill-emerald-500 text-emerald-500" />
         ))}
       </div>
-      <p className="text-slate-700 dark:text-slate-300 mb-8 flex-grow italic leading-relaxed">"{formatVisiGoText(testi.text)}"</p>
-      <div className="flex items-center gap-4">
+      <p className="text-lg text-slate-700 dark:text-slate-300 mb-10 flex-grow italic leading-relaxed font-medium">"{formatVisiGoText(testi.text)}"</p>
+      <div className="flex items-center gap-5">
         <img 
           src={testi.avatar} 
           alt={testi.name} 
-          className="w-12 h-12 rounded-full object-cover border-2 border-brand-blue/10" 
+          className="w-14 h-14 rounded-full object-cover border-4 border-slate-50 dark:border-slate-700 shadow-lg" 
           referrerPolicy="no-referrer" 
           loading="lazy"
         />
         <div>
-          <p className="font-bold text-slate-900 dark:text-white">{testi.name}</p>
-          <p className="text-sm text-slate-500 dark:text-slate-400">{testi.city}</p>
+          <p className="font-extrabold text-slate-900 dark:text-white text-lg">{testi.name}</p>
+          <p className="text-sm font-bold text-brand-cyan uppercase tracking-widest">{testi.city}</p>
         </div>
       </div>
     </div>
@@ -91,11 +91,11 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-          <div className="max-w-2xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+          <div className="max-w-3xl">
             <FadeIn>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">{formatVisiGoText(content.title)}</h2>
-              <p className="text-lg text-slate-600 dark:text-slate-400">{formatVisiGoText(content.desc)}</p>
+              <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-8">{formatVisiGoText(content.title)}</h2>
+              <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">{formatVisiGoText(content.desc)}</p>
             </FadeIn>
           </div>
           
