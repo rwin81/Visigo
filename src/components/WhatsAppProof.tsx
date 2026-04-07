@@ -100,7 +100,7 @@ export const WhatsAppProof = () => {
 
                 {/* Decorative WhatsApp Icon Background */}
                 <div className="absolute -bottom-4 -right-4 opacity-[0.03] dark:opacity-[0.05] group-hover:scale-110 transition-transform duration-500">
-                  <img src="https://img.icons8.com/color/144/whatsapp.png" alt="WA" className="w-32 h-32" referrerPolicy="no-referrer" />
+                  <img src="https://img.icons8.com/color/144/whatsapp.png" alt="WA" className="w-32 h-32" referrerPolicy="no-referrer" loading="lazy" />
                 </div>
               </div>
             </FadeIn>

@@ -128,6 +128,7 @@ export const Hero = ({ content, setIsBookingOpen }: HeroProps) => {
                       alt="User" 
                       className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 object-cover"
                       referrerPolicy="no-referrer"
+                      loading="lazy"
                     />
                   ))}
                 </div>

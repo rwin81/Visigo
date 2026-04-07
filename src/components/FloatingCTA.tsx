@@ -98,6 +98,7 @@ export const FloatingCTA = ({ onClick }: FloatingCTAProps) => {
               alt="WhatsApp" 
               className="w-12 h-12 sm:w-14 sm:h-14 group-hover:rotate-12 transition-transform" 
               referrerPolicy="no-referrer" 
+              loading="lazy"
             />
             <motion.div
               animate={{

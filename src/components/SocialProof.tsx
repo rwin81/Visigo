@@ -69,6 +69,7 @@ export const SocialProof = () => {
                 alt={currentNotif.name} 
                 className="w-12 h-12 rounded-full object-cover border-2 border-brand-blue/10"
                 referrerPolicy="no-referrer"
+                loading="lazy"
               />
               <div className="absolute -bottom-1 -right-1 bg-brand-green text-white p-1 rounded-full shadow-sm">
                 {currentNotif.action.includes('booking') ? <Calendar className="w-3 h-3" /> : <ShoppingBag className="w-3 h-3" />}

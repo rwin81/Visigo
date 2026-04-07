@@ -292,7 +292,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       rel="noopener noreferrer"
                       className="w-full py-4 bg-brand-green text-white rounded-xl font-bold hover:bg-brand-green/90 transition-all flex items-center justify-center gap-2 shadow-lg"
                     >
-                      <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-6 h-6" referrerPolicy="no-referrer" />
+                      <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-6 h-6" referrerPolicy="no-referrer" loading="lazy" />
                       Kirim Ulang via WhatsApp
                     </a>
                     
@@ -443,7 +443,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       </>
                     ) : (
                       <>
-                        <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-8 h-8 scale-110" referrerPolicy="no-referrer" />
+                        <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-8 h-8 scale-110" referrerPolicy="no-referrer" loading="lazy" />
                         Kirim via WhatsApp
                       </>
                     )}
@@ -457,7 +457,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-brand-blue dark:text-brand-cyan font-bold hover:underline"
                     >
-                      <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-5 h-5" referrerPolicy="no-referrer" />
+                      <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-5 h-5" referrerPolicy="no-referrer" loading="lazy" />
                       Chat Admin Sekarang
                     </a>
                   </div>

@@ -47,6 +47,7 @@ export const ServiceMarquee = ({ cities, logoUrl, setIsBookingOpen }: ServiceMar
                   className="h-7 w-auto object-contain" 
                   referrerPolicy="no-referrer"
                   style={{ display: 'block' }}
+                  loading="lazy"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     if (!target.src.includes('icons8')) {

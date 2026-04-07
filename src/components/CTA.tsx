@@ -43,7 +43,7 @@ export const CTA = ({ content, setIsBookingOpen }: CTAProps) => {
                 onClick={() => setIsBookingOpen(true)}
                 className="w-full sm:w-auto bg-brand-blue hover:bg-brand-blue/90 text-white px-12 py-6 rounded-2xl font-black text-2xl transition-all shadow-2xl shadow-brand-blue/40 hover:shadow-brand-blue/60 hover:scale-105 flex items-center justify-center gap-4 group"
               >
-                <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-10 h-10 group-hover:rotate-12 transition-transform" referrerPolicy="no-referrer" />
+                <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-10 h-10 group-hover:rotate-12 transition-transform" referrerPolicy="no-referrer" loading="lazy" />
                 BOOKING SEKARANG
               </button>
               
@@ -56,6 +56,7 @@ export const CTA = ({ content, setIsBookingOpen }: CTAProps) => {
                       alt="User" 
                       className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover"
                       referrerPolicy="no-referrer"
+                      loading="lazy"
                     />
                   ))}
                 </div>

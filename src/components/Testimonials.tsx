@@ -73,6 +73,7 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
           alt={testi.name} 
           className="w-12 h-12 rounded-full object-cover border-2 border-brand-blue/10" 
           referrerPolicy="no-referrer" 
+          loading="lazy"
         />
         <div>
           <p className="font-bold text-slate-900 dark:text-white">{testi.name}</p>
