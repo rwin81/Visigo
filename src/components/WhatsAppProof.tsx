@@ -14,59 +14,134 @@ const chatScreenshots = [
 
 export const WhatsAppProof = () => {
   return (
-    <section className="py-24 bg-white dark:bg-slate-950 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
+    <section className="relative py-32 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+      {/* WhatsApp Doodle Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" 
+           style={{ 
+             backgroundImage: `url("https://www.transparenttextures.com/patterns/carbon-fibre.png")`,
+             backgroundSize: '200px'
+           }} 
+      />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-24">
           <FadeIn>
-            <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-8">
-              💬 <span className="text-brand-cyan">WhatsApp</span> Chat Real
+            <div className="inline-block px-4 py-1.5 bg-brand-green/10 text-brand-green rounded-full text-xs font-black tracking-widest uppercase mb-6">
+              Social Proof
+            </div>
+            <h2 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-8 leading-[0.9]">
+              💬 <span className="text-brand-cyan">WhatsApp</span> <br className="hidden sm:block" /> Chat Real
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-              Lihat bagaimana antusiasme pelanggan kami setiap harinya. Ratusan chat masuk untuk booking dan konsultasi.
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              Bukan sekadar janji, ini adalah bukti nyata interaksi harian kami dengan pelanggan setia VisiGo.
             </p>
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Scattered Layout (Desktop) */}
+        <div className="hidden md:block relative min-h-[1000px]">
+          {chatScreenshots.map((url, i) => {
+            const placements = [
+              { top: '0%', left: '5%', rotate: -3, scale: 1, delay: 0 },
+              { top: '5%', left: '40%', rotate: 2, scale: 0.95, delay: 0.1 },
+              { top: '0%', left: '70%', rotate: -1, scale: 1.05, delay: 0.2 },
+              { top: '45%', left: '10%', rotate: 4, scale: 1, delay: 0.3 },
+              { top: '50%', left: '45%', rotate: -2, scale: 1.1, delay: 0.4 },
+              { top: '40%', left: '75%', rotate: 3, scale: 0.9, delay: 0.5 },
+            ];
+            
+            const p = placements[i % placements.length];
+
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 50, rotate: p.rotate * 2 }}
+                whileInView={{ opacity: 1, y: 0, rotate: p.rotate }}
+                viewport={{ once: true }}
+                transition={{ 
+                  delay: p.delay,
+                  type: "spring",
+                  stiffness: 50,
+                  damping: 20
+                }}
+                animate={{
+                  y: [0, -15, 0],
+                }}
+                transition={{
+                  duration: 6 + i,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.5
+                }}
+                className="absolute w-[350px] pointer-events-auto"
+                style={{ 
+                  top: p.top, 
+                  left: p.left,
+                  zIndex: i + 10
+                }}
+              >
+                <div className="relative bg-white dark:bg-slate-900 rounded-[2rem] p-3 shadow-2xl shadow-slate-200/50 dark:shadow-brand-blue/20 border border-slate-100 dark:border-slate-800 overflow-hidden group hover:z-50 hover:scale-105 transition-all duration-500">
+                  {/* WhatsApp Style Header */}
+                  <div className="flex items-center justify-between mb-3 px-3 py-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-brand-green flex items-center justify-center text-white">
+                        <MessageCircle className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-white text-[10px]">VisiGo Official</h4>
+                        <p className="text-[8px] text-brand-green font-bold uppercase tracking-widest">Online</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-700" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-700" />
+                    </div>
+                  </div>
+
+                  {/* The Real Screenshot */}
+                  <div className="relative rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700 shadow-inner">
+                    <img 
+                      src={url} 
+                      alt={`WhatsApp Chat Proof ${i + 1}`} 
+                      className="w-full h-auto object-cover object-top"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                    />
+                    
+                    {/* Overlay Badge */}
+                    <div className="absolute top-3 right-3 bg-brand-green/90 text-white text-[8px] font-black px-3 py-1 rounded-full shadow-lg backdrop-blur-md border border-white/20">
+                      REAL CHAT
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Mobile View: Grid Layout */}
+        <div className="md:hidden grid grid-cols-1 gap-8">
           {chatScreenshots.map((url, i) => (
             <FadeIn key={i} delay={i * 0.1}>
-              <div className="relative bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 shadow-2xl shadow-brand-blue/10 border border-slate-100 dark:border-slate-800 overflow-hidden group h-full">
-                {/* WhatsApp Style Header */}
-                <div className="flex items-center justify-between mb-4 px-3 py-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+              <div className="relative bg-white dark:bg-slate-900 rounded-[2rem] p-3 shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden">
+                <div className="flex items-center justify-between mb-3 px-3 py-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-brand-green flex items-center justify-center text-white">
                       <MessageCircle className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 dark:text-white text-xs">VisiGo Official</h4>
+                      <h4 className="font-bold text-slate-900 dark:text-white text-[10px]">VisiGo Official</h4>
                       <p className="text-[8px] text-brand-green font-bold uppercase tracking-widest">Online</p>
                     </div>
                   </div>
-                  <div className="flex gap-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600" />
-                  </div>
                 </div>
-
-                {/* The Real Screenshot */}
-                <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-inner aspect-[3/4]">
+                <div className="relative rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700">
                   <img 
                     src={url} 
                     alt={`WhatsApp Chat Proof ${i + 1}`} 
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-auto"
                     referrerPolicy="no-referrer"
-                    loading="lazy"
                   />
-                  
-                  {/* Overlay Badge */}
-                  <div className="absolute top-3 right-3 bg-brand-green/90 text-white text-[8px] font-black px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md border border-white/20">
-                    REAL CHAT
-                  </div>
-                </div>
-
-                {/* Decorative WhatsApp Icon Background */}
-                <div className="absolute -bottom-4 -right-4 opacity-[0.03] dark:opacity-[0.05] group-hover:scale-110 transition-transform duration-500">
-                  <img src="https://img.icons8.com/color/144/whatsapp.png" alt="WA" className="w-24 h-24" referrerPolicy="no-referrer" />
                 </div>
               </div>
             </FadeIn>
