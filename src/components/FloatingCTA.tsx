@@ -7,45 +7,8 @@ interface FloatingCTAProps {
 }
 
 export const FloatingCTA = ({ onClick }: FloatingCTAProps) => {
-  const [showLabel, setShowLabel] = useState(false);
-
-  useEffect(() => {
-    // Show label after 3 seconds
-    const timer = setTimeout(() => setShowLabel(true), 3000);
-    
-    // Toggle label every 10 seconds to grab attention
-    const interval = setInterval(() => {
-      setShowLabel(prev => !prev);
-    }, 10000);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
-  }, []);
-
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-none">
-      {/* Urgency Label */}
-      <AnimatePresence>
-        {showLabel && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.8 }}
-            className="bg-white dark:bg-slate-900 px-4 py-2 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 flex items-center gap-2 pointer-events-auto"
-          >
-            <div className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
-            </div>
-            <p className="text-xs font-black text-slate-900 dark:text-white whitespace-nowrap">
-              🟢 SIAP MELAYANI 7 HARI SEMINGGU
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Pulsating Button */}
       <div className="relative pointer-events-auto">
         {/* Pulsating Rings */}

@@ -7,22 +7,28 @@ interface PromoBubblesProps {
 }
 
 export const PromoBubbles = ({ onClick }: PromoBubblesProps) => {
-  const [activeBubble, setActiveBubble] = useState<number>(0); // 0: none, 1: Cek Mata, 2: Promo
+  const [activeBubble, setActiveBubble] = useState<number>(0); // 0: none, 1: Cek Mata, 2: Promo, 3: 7 Hari
 
   useEffect(() => {
     const sequence = async () => {
       while (true) {
-        // Show Bubble 1
+        // Show Bubble 1: Cek Mata
         setActiveBubble(1);
         await new Promise(resolve => setTimeout(resolve, 6000));
         setActiveBubble(0);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
-        // Show Bubble 2
+        // Show Bubble 2: Promo
         setActiveBubble(2);
         await new Promise(resolve => setTimeout(resolve, 6000));
         setActiveBubble(0);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Show Bubble 3: 7 Hari
+        setActiveBubble(3);
+        await new Promise(resolve => setTimeout(resolve, 6000));
+        setActiveBubble(0);
+        await new Promise(resolve => setTimeout(resolve, 1500));
       }
     };
 
@@ -101,6 +107,33 @@ export const PromoBubbles = ({ onClick }: PromoBubblesProps) => {
 
               {/* Pulsating Ring */}
               <div className="absolute -inset-1 rounded-2xl sm:rounded-3xl border-2 border-brand-cyan/50 animate-ping opacity-20" />
+            </a>
+          </motion.div>
+        )}
+
+        {activeBubble === 3 && (
+          <motion.div
+            key="bubble-3"
+            initial={{ x: 200, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 200, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 100, damping: 15 }}
+            className="pointer-events-auto"
+          >
+            <a 
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative flex items-center gap-2 sm:gap-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl sm:rounded-3xl shadow-2xl border-2 border-slate-100 dark:border-slate-800 hover:scale-105 transition-transform"
+            >
+              <div className="flex h-3 w-3 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
+              </div>
+              <div className="text-left">
+                <p className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400">Status: Online</p>
+                <p className="text-sm sm:text-base font-black leading-tight">SIAP MELAYANI 7 HARI SEMINGGU</p>
+              </div>
             </a>
           </motion.div>
         )}
