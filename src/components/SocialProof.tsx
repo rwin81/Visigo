@@ -54,33 +54,33 @@ export const SocialProof = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-6 left-6 z-[60] pointer-events-none">
+    <div className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-[60] pointer-events-none">
       <AnimatePresence>
         {currentNotif && (
           <motion.div
             initial={{ opacity: 0, x: -50, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: -50, scale: 0.9 }}
-            className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 p-4 max-w-[320px] pointer-events-auto flex items-center gap-4"
+            className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 p-3 sm:p-4 max-w-[260px] sm:max-w-[320px] pointer-events-auto flex items-center gap-3 sm:gap-4"
           >
             <div className="relative flex-shrink-0">
               <img 
                 src={currentNotif.avatar} 
                 alt={currentNotif.name} 
-                className="w-12 h-12 rounded-full object-cover border-2 border-brand-blue/10"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brand-blue/10"
                 referrerPolicy="no-referrer"
                 loading="lazy"
               />
-              <div className="absolute -bottom-1 -right-1 bg-brand-green text-white p-1 rounded-full shadow-sm">
-                {currentNotif.action.includes('booking') ? <Calendar className="w-3 h-3" /> : <ShoppingBag className="w-3 h-3" />}
+              <div className="absolute -bottom-1 -right-1 bg-brand-green text-white p-0.5 sm:p-1 rounded-full shadow-sm">
+                {currentNotif.action.includes('booking') ? <Calendar className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> : <ShoppingBag className="w-2.5 h-2.5 sm:w-3 sm:h-3" />}
               </div>
             </div>
             
             <div className="flex-grow">
-              <p className="text-sm text-slate-900 dark:text-white leading-snug">
+              <p className="text-xs sm:text-sm text-slate-900 dark:text-white leading-snug">
                 <span className="font-bold">{currentNotif.name}</span> dari <span className="font-bold">{currentNotif.city}</span> {currentNotif.action}
               </p>
-              <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-wider font-semibold">Baru saja</p>
+              <p className="text-[9px] sm:text-[10px] text-slate-400 mt-0.5 sm:mt-1 uppercase tracking-wider font-semibold">Baru saja</p>
             </div>
           </motion.div>
         )}

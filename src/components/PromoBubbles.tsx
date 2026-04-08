@@ -32,7 +32,7 @@ export const PromoBubbles = ({ onClick }: PromoBubblesProps) => {
   const whatsappUrl = "https://wa.me/6281234567890?text=Halo%20VisiGo,%20saya%20ingin%20booking%20layanan%20cek%20mata%20gratis%20dan%20tanya%20promo%20kacamata.";
 
   return (
-    <div className="fixed right-4 sm:right-6 bottom-32 sm:bottom-40 z-40 flex flex-col gap-4 pointer-events-none">
+    <div className="fixed right-4 sm:right-6 bottom-28 sm:bottom-40 z-40 flex flex-col gap-4 pointer-events-none">
       <AnimatePresence mode="wait">
         {activeBubble === 1 && (
           <motion.div
@@ -47,14 +47,14 @@ export const PromoBubbles = ({ onClick }: PromoBubblesProps) => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center gap-3 bg-gradient-to-r from-brand-green to-emerald-500 text-white px-6 py-4 rounded-3xl shadow-2xl shadow-brand-green/40 border-2 border-white/20 hover:scale-105 transition-transform"
+              className="group relative flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-brand-green to-emerald-500 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl sm:rounded-3xl shadow-2xl shadow-brand-green/40 border-2 border-white/20 hover:scale-105 transition-transform"
             >
-              <div className="bg-white/20 p-2 rounded-full">
-                <Sparkles className="w-5 h-5 text-white animate-pulse" />
+              <div className="bg-white/20 p-1.5 sm:p-2 rounded-full">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-pulse" />
               </div>
               <div className="text-left">
-                <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">Layanan Home Service</p>
-                <p className="text-base font-black leading-tight">CEK MATA GRATIS!</p>
+                <p className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest opacity-80">Layanan Home Service</p>
+                <p className="text-sm sm:text-base font-black leading-tight">CEK MATA GRATIS!</p>
               </div>
               
               {/* Shine effect */}
@@ -89,18 +89,18 @@ export const PromoBubbles = ({ onClick }: PromoBubblesProps) => {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center gap-3 bg-gradient-to-r from-brand-blue to-brand-cyan text-white px-6 py-4 rounded-3xl shadow-2xl shadow-brand-blue/40 border-2 border-white/20 hover:scale-105 transition-transform"
+              className="group relative flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-brand-blue to-brand-cyan text-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl sm:rounded-3xl shadow-2xl shadow-brand-blue/40 border-2 border-white/20 hover:scale-105 transition-transform"
             >
-              <div className="bg-white/20 p-2 rounded-full">
-                <Tag className="w-5 h-5 text-white" />
+              <div className="bg-white/20 p-1.5 sm:p-2 rounded-full">
+                <Tag className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div className="text-left">
-                <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">Promo Terbatas</p>
-                <p className="text-base font-black leading-tight">KACAMATA MULAI 150RB!</p>
+                <p className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest opacity-80">Promo Terbatas</p>
+                <p className="text-sm sm:text-base font-black leading-tight">KACAMATA MULAI 150RB!</p>
               </div>
 
               {/* Pulsating Ring */}
-              <div className="absolute -inset-1 rounded-3xl border-2 border-brand-cyan/50 animate-ping opacity-20" />
+              <div className="absolute -inset-1 rounded-2xl sm:rounded-3xl border-2 border-brand-cyan/50 animate-ping opacity-20" />
             </a>
           </motion.div>
         )}
