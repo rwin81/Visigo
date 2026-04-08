@@ -17,6 +17,7 @@ import { FloatingCTA } from './components/FloatingCTA';
 import { ServiceMarquee } from './components/ServiceMarquee';
 import { WhyChooseVisiGoHook } from './components/WhyChooseVisiGoHook';
 import { WhatsAppProof } from './components/WhatsAppProof';
+import { PromoBubbles } from './components/PromoBubbles';
 import { defaultContent } from './constants/content';
 import { Content } from './types';
 
@@ -143,6 +144,9 @@ export default function App() {
 
         {/* Floating CTA with Pulsating & Urgency Effects */}
         <FloatingCTA onClick={() => setIsBookingOpen(true)} />
+
+        {/* Eye-catching Promo Bubbles */}
+        <PromoBubbles onClick={() => setIsBookingOpen(true)} />
 
         {/* Modals */}
         <BookingModal 
