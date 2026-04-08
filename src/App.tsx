@@ -116,11 +116,6 @@ export default function App() {
 
         <main>
           <Hero content={content.hero} setIsBookingOpen={setIsBookingOpen} />
-          <ServiceMarquee 
-            cities={content.coverage.cities} 
-            logoUrl={content.logoUrl} 
-            setIsBookingOpen={setIsBookingOpen} 
-          />
           <Problems content={content.problems} setIsBookingOpen={setIsBookingOpen} />
           <Services content={content.services} setIsBookingOpen={setIsBookingOpen} />
           <HowItWorks content={content.howItWorks} />

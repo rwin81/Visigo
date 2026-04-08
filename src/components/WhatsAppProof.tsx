@@ -1,45 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { FadeIn } from './FadeIn';
-import { MessageCircle, CheckCheck } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
-const chats = [
-  {
-    name: "Budi Santoso",
-    time: "Baru saja",
-    message: "Halo VisiGo, saya mau booking Home Eye Check untuk hari Sabtu jam 10 pagi di rumah Tuban bisa?",
-    reply: "Halo Pak Budi! Bisa pak, jadwal Sabtu jam 10 masih tersedia. Mohon isi form bookingnya ya pak."
-  },
-  {
-    name: "Siti Aminah",
-    time: "2 menit yang lalu",
-    message: "Min, kacamata anak saya sudah jadi? Yang pesen hari Senin kemarin di Bojonegoro.",
-    reply: "Halo Bu Siti, sudah jadi bu! Sedang dalam pengiriman oleh tim kami, estimasi sampai siang ini ya."
-  },
-  {
-    name: "Andi Wijaya",
-    time: "5 menit yang lalu",
-    message: "Terima kasih VisiGo, pelayanannya mantap. Gak perlu repot ke optik, kacamata langsung diantar ke kantor.",
-    reply: "Sama-sama Pak Andi! Senang bisa membantu. Semoga kacamatanya nyaman dipakai bekerja."
-  },
-  {
-    name: "Rina Kartika",
-    time: "12 menit yang lalu",
-    message: "Mau tanya min, kalau screening mata untuk karyawan kantor di Rembang ada minimal jumlah orangnya?",
-    reply: "Halo Bu Rina, untuk screening kantor minimal 10 orang ya bu. Kami bawakan alat lengkap ke lokasi."
-  },
-  {
-    name: "Ahmad Fauzi",
-    time: "18 menit yang lalu",
-    message: "Kacamata anti radiasinya keren banget modelnya. Pas banget di muka saya. Thanks ya!",
-    reply: "Mantap Pak Ahmad! Terima kasih testimoninya. Jangan lupa rekomendasikan ke teman-teman ya pak."
-  },
-  {
-    name: "Linda Wahyuni",
-    time: "25 menit yang lalu",
-    message: "Pagi min, mau atur jadwal periksa mata untuk orang tua saya di rumah Sragen besok sore bisa?",
-    reply: "Pagi Bu Linda! Besok sore jam 16.00 masih kosong bu. Mau kami amankan jadwalnya?"
-  }
+const chatScreenshots = [
+  "https://i.ibb.co.com/KcGjLbks/Whats-App-Image-2026-04-08-at-13-34-38-1.jpg",
+  "https://i.ibb.co.com/9kSx75Pw/Whats-App-Image-2026-04-08-at-13-34-38-2.jpg",
+  "https://i.ibb.co.com/b53JB2Zf/Whats-App-Image-2026-04-08-at-13-34-38-3.jpg",
+  "https://i.ibb.co.com/3y3mk9fK/Whats-App-Image-2026-04-08-at-13-34-38.jpg",
+  "https://i.ibb.co.com/nNxNYDSL/Whats-App-Image-2026-04-08-at-13-34-39-1.jpg",
+  "https://i.ibb.co.com/Ng016Xpc/Whats-App-Image-2026-04-08-at-13-34-39.jpg"
 ];
 
 export const WhatsAppProof = () => {
@@ -58,49 +28,45 @@ export const WhatsAppProof = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {chats.map((chat, i) => (
+          {chatScreenshots.map((url, i) => (
             <FadeIn key={i} delay={i * 0.1}>
-              <div className="bg-[#e5ddd5] dark:bg-[#0d1418] rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden group transition-all duration-500">
-                {/* WhatsApp Header Style */}
-                <div className="flex items-center gap-4 mb-6 border-b border-slate-300/50 dark:border-slate-800 pb-4">
-                  <div className="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center text-brand-green">
-                    <MessageCircle className="w-6 h-6" />
+              <div className="relative bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 shadow-2xl shadow-brand-blue/10 border border-slate-100 dark:border-slate-800 overflow-hidden group h-full">
+                {/* WhatsApp Style Header */}
+                <div className="flex items-center justify-between mb-4 px-3 py-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-brand-green flex items-center justify-center text-white">
+                      <MessageCircle className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white text-xs">VisiGo Official</h4>
+                      <p className="text-[8px] text-brand-green font-bold uppercase tracking-widest">Online</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-extrabold text-slate-900 dark:text-white text-base">{chat.name}</h4>
-                    <p className="text-xs text-brand-green font-bold uppercase tracking-widest">Online</p>
+                  <div className="flex gap-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600" />
                   </div>
                 </div>
 
-                {/* Chat Bubbles */}
-                <div className="space-y-4 relative z-10">
-                  {/* User Message */}
-                  <div className="flex justify-start">
-                    <div className="bg-white dark:bg-[#262d31] p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] border-none">
-                      <p className="text-sm text-slate-800 dark:text-slate-200 leading-relaxed">
-                        {chat.message}
-                      </p>
-                      <p className="text-[10px] text-slate-400 mt-1 text-right">{chat.time}</p>
-                    </div>
-                  </div>
-
-                  {/* Admin Reply */}
-                  <div className="flex justify-end">
-                    <div className="bg-[#e2ffca] dark:bg-[#056162] p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[85%] border-none">
-                      <p className="text-sm text-slate-900 dark:text-white leading-relaxed">
-                        {chat.reply}
-                      </p>
-                      <div className="flex items-center justify-end gap-1 mt-1">
-                        <p className="text-[10px] text-slate-500 dark:text-slate-300/70">{chat.time === 'Baru saja' ? 'Baru saja' : 'Baru saja'}</p>
-                        <CheckCheck className="w-3 h-3 text-brand-blue" />
-                      </div>
-                    </div>
+                {/* The Real Screenshot */}
+                <div className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-inner aspect-[3/4]">
+                  <img 
+                    src={url} 
+                    alt={`WhatsApp Chat Proof ${i + 1}`} 
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                  />
+                  
+                  {/* Overlay Badge */}
+                  <div className="absolute top-3 right-3 bg-brand-green/90 text-white text-[8px] font-black px-3 py-1.5 rounded-full shadow-lg backdrop-blur-md border border-white/20">
+                    REAL CHAT
                   </div>
                 </div>
 
                 {/* Decorative WhatsApp Icon Background */}
                 <div className="absolute -bottom-4 -right-4 opacity-[0.03] dark:opacity-[0.05] group-hover:scale-110 transition-transform duration-500">
-                  <img src="https://img.icons8.com/color/144/whatsapp.png" alt="WA" className="w-32 h-32" referrerPolicy="no-referrer" loading="lazy" />
+                  <img src="https://img.icons8.com/color/144/whatsapp.png" alt="WA" className="w-24 h-24" referrerPolicy="no-referrer" />
                 </div>
               </div>
             </FadeIn>
