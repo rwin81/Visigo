@@ -141,7 +141,10 @@ export default function App() {
         <FloatingCTA onClick={() => setIsBookingOpen(true)} />
 
         {/* Eye-catching Promo Bubbles */}
-        <PromoBubbles onClick={() => setIsBookingOpen(true)} />
+        <PromoBubbles 
+          onClick={() => setIsBookingOpen(true)} 
+          whatsappNumber={content.whatsappNumber}
+        />
 
         {/* Modals */}
         <BookingModal 

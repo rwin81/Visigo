@@ -58,20 +58,14 @@ export const WhatsAppProof = () => {
                 initial={{ opacity: 0, y: 50, rotate: p.rotate * 2 }}
                 whileInView={{ opacity: 1, y: 0, rotate: p.rotate }}
                 viewport={{ once: true }}
-                transition={{ 
-                  delay: p.delay,
-                  type: "spring",
-                  stiffness: 50,
-                  damping: 20
-                }}
                 animate={{
                   y: [0, -15, 0],
                 }}
-                transition={{
+                transition={{ 
                   duration: 6 + i,
                   repeat: Infinity,
                   ease: "easeInOut",
-                  delay: i * 0.5
+                  delay: p.delay || i * 0.5
                 }}
                 className="absolute w-[350px] pointer-events-auto"
                 style={{ 

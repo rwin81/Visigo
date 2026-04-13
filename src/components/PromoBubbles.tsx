@@ -4,9 +4,10 @@ import { Sparkles, Tag } from 'lucide-react';
 
 interface PromoBubblesProps {
   onClick: () => void;
+  whatsappNumber: string;
 }
 
-export const PromoBubbles = ({ onClick }: PromoBubblesProps) => {
+export const PromoBubbles = ({ onClick, whatsappNumber }: PromoBubblesProps) => {
   const [activeBubble, setActiveBubble] = useState<number>(0); // 0: none, 1: Cek Mata, 2: Promo, 3: 7 Hari
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export const PromoBubbles = ({ onClick }: PromoBubblesProps) => {
     sequence();
   }, []);
 
-  const whatsappUrl = "https://wa.me/6281234567890?text=Halo%20VisiGo,%20saya%20ingin%20booking%20layanan%20cek%20mata%20gratis%20dan%20tanya%20promo%20kacamata.";
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Halo%20VisiGo,%20saya%20ingin%20booking%20layanan%20cek%20mata%20gratis%20dan%20tanya%20promo%20kacamata.`;
 
   return (
     <div className="fixed right-4 sm:right-6 bottom-28 sm:bottom-40 z-40 flex flex-col gap-4 pointer-events-none">
