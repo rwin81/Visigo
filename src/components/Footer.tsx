@@ -71,7 +71,6 @@ export const Footer = ({ content }: FooterProps) => {
             <h4 className="text-white font-extrabold mb-8 uppercase tracking-[0.2em] text-sm">Perusahaan</h4>
             <ul className="space-y-5">
               <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Tentang Kami</a></li>
-              <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Karir</a></li>
               <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Blog</a></li>
               <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Kontak</a></li>
             </ul>

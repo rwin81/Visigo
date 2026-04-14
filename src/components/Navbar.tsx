@@ -17,13 +17,16 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
     { name: 'Layanan', href: '#layanan' },
     { name: 'Cara Kerja', href: '#cara-kerja' },
     { name: 'Testimoni', href: '#testimoni' },
+    { name: 'Affiliate', href: 'https://affiliate-visigo.netlify.app/', isExternal: true },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
+    if (link.isExternal) return;
+    
     e.preventDefault();
     setIsMenuOpen(false);
     
-    const targetId = href.replace('#', '');
+    const targetId = link.href.replace('#', '');
     const element = document.getElementById(targetId);
     
     if (element) {
@@ -57,7 +60,9 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
               <a 
                 key={link.name}
                 href={link.href} 
-                onClick={(e) => handleNavClick(e, link.href)}
+                onClick={(e) => handleNavClick(e, link)}
+                target={link.isExternal ? "_blank" : undefined}
+                rel={link.isExternal ? "noopener noreferrer" : undefined}
                 className="text-slate-600 dark:text-slate-300 hover:text-brand-cyan dark:hover:text-brand-cyan font-extrabold text-sm uppercase tracking-[0.2em] transition-all hover:scale-105"
               >
                 {link.name}
@@ -107,7 +112,9 @@ export const Navbar = ({ isDarkMode, setIsDarkMode, setIsBookingOpen, logoUrl }:
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={(e) => handleNavClick(e, link)}
+                  target={link.isExternal ? "_blank" : undefined}
+                  rel={link.isExternal ? "noopener noreferrer" : undefined}
                   className="block px-4 py-3 text-base font-medium text-slate-600 dark:text-slate-300 hover:text-brand-blue dark:hover:text-brand-cyan hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl transition-all"
                 >
                   {link.name}
