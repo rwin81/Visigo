@@ -110,7 +110,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       `*Alamat:* ${formData.address}\n` +
                       `*Produk:* ${formData.product}\n` +
                       `*Keterangan:* ${formData.description || '-'}\n` +
-                      `*Referensi:* ${formData.reference || '-'}\n` +
+                      `*Petugas:* ${formData.reference || '-'}\n` +
                       `*Cabang:* ${formData.branch || '-'}\n\n` +
                       `Mohon info ketersediaan stok. Terima kasih!`;
       }
@@ -469,23 +469,23 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Referensi</label>
+                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Petugas check mata</label>
                           <input 
                             type="text" 
                             value={formData.reference}
                             onChange={(e) => setFormData({...formData, reference: e.target.value})}
                             className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                            placeholder="IG / FB / Teman" 
+                            placeholder="Nama petugas" 
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Cabang</label>
+                          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">kantor cabang</label>
                           <input 
                             type="text" 
                             value={formData.branch}
                             onChange={(e) => setFormData({...formData, branch: e.target.value})}
                             className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                            placeholder="Lokasi Anda" 
+                            placeholder="Nama cabang" 
                           />
                         </div>
                       </div>
