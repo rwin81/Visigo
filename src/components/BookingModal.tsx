@@ -78,7 +78,36 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       const waBase = formatWhatsAppLink(formData.phone);
       const cleanedPhone = waBase.split('/').pop();
       
-      // Handle File Upload if exists
+      // 2. Prepare WhatsApp Message for Admin (Customer sends to Admin)
+      let messageText = '';
+      
+      if (step === 'booking') {
+        messageText = `*BOOKING LAYANAN VISIGO*\n\n` +
+                      `*Nama:* ${formData.name}\n` +
+                      `*No. WA:* ${formData.phone}\n` +
+                      `*Alamat:* ${formData.address}\n` +
+                      `*Layanan:* ${formData.service}\n\n` +
+                      `Mohon info jadwal yang tersedia. Terima kasih!`;
+      } else {
+        messageText = `*ORDER PRODUK VISIGO*\n\n` +
+                      `*Nama:* ${formData.name}\n` +
+                      `*No. WA:* ${formData.phone}\n` +
+                      `*Alamat:* ${formData.address}\n` +
+                      `*Produk:* ${formData.product}\n` +
+                      `*Keterangan:* ${formData.description || '-'}\n` +
+                      `*Referensi:* ${formData.reference || '-'}\n` +
+                      `*Cabang:* ${formData.branch || '-'}\n\n` +
+                      `Mohon info ketersediaan stok. Terima kasih!`;
+      }
+      
+      const finalWaUrl = `https://wa.me/${content.whatsappNumber}?text=${encodeURIComponent(messageText)}`;
+      setGeneratedWaLink(finalWaUrl);
+      
+      // 3. IMMEDIATELY Redirect / Open WhatsApp
+      // Calling this before async work to ensure it's not blocked by popup blockers
+      window.open(finalWaUrl, '_blank');
+      
+      // 4. Handle File Upload if exists
       let filePayload = null;
       if (selectedFile) {
         const base64 = await new Promise<string>((resolve) => {
@@ -162,37 +191,8 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           console.error('Google Sheet sync failed to initiate:', sheetError);
         }
       }
-
-      // 2. Prepare WhatsApp Message for Admin (Customer sends to Admin)
-      let messageText = '';
       
-      if (step === 'booking') {
-        messageText = `*BOOKING LAYANAN VISIGO*\n\n` +
-                      `*Nama:* ${formData.name}\n` +
-                      `*No. WA:* ${formData.phone}\n` +
-                      `*Alamat:* ${formData.address}\n` +
-                      `*Layanan:* ${formData.service}\n\n` +
-                      `Mohon info jadwal yang tersedia. Terima kasih!`;
-      } else {
-        messageText = `*ORDER PRODUK VISIGO*\n\n` +
-                      `*Nama:* ${formData.name}\n` +
-                      `*No. WA:* ${formData.phone}\n` +
-                      `*Alamat:* ${formData.address}\n` +
-                      `*Produk:* ${formData.product}\n` +
-                      `*Keterangan:* ${formData.description || '-'}\n` +
-                      `*Referensi:* ${formData.reference || '-'}\n` +
-                      `*Cabang:* ${formData.branch || '-'}\n\n` +
-                      `Mohon info ketersediaan stok. Terima kasih!`;
-      }
-      
-      // Use encodeURIComponent for the whole message to handle emojis correctly
-      const finalWaUrl = `https://wa.me/${content.whatsappNumber}?text=${encodeURIComponent(messageText)}`;
-      setGeneratedWaLink(finalWaUrl);
-      
-      // 3. Open WhatsApp to Admin
-      window.open(finalWaUrl, '_blank');
-      
-      // 4. Show Success Step
+      // 5. Show Success Step
       setStep('success');
       
     } catch (error) {
@@ -280,25 +280,15 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   <div className="w-20 h-20 bg-brand-green/10 text-brand-green rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
                   </div>
-                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Terima Kasih, kak {formData.name}! ✨</h4>
+                  <h4 className="text-2xl font-black text-slate-900 dark:text-white mb-4">Berhasil Terkirim! ✨</h4>
                   <p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                    Data Anda telah tersimpan di sistem kami. Silakan klik tombol di bawah jika WhatsApp tidak terbuka otomatis untuk mengirim detail pesanan ke admin. 🚀
+                    Data Anda telah otomatis tersimpan di sistem kami dan WhatsApp admin sedang dibuka. 🚀
                   </p>
                   
                   <div className="space-y-3">
-                    <a 
-                      href={generatedWaLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-4 bg-brand-green text-white rounded-xl font-bold hover:bg-brand-green/90 transition-all flex items-center justify-center gap-2 shadow-lg"
-                    >
-                      <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-6 h-6" referrerPolicy="no-referrer" loading="lazy" />
-                      Kirim Ulang via WhatsApp
-                    </a>
-                    
                     <button 
                       onClick={onClose}
-                      className="w-full py-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                      className="w-full py-4 bg-brand-blue text-white rounded-xl font-bold hover:opacity-90 transition-all shadow-lg"
                     >
                       Selesai
                     </button>
