@@ -10,7 +10,7 @@ interface BookingModalProps {
 }
 
 export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) => {
-  const [step, setStep] = useState<'selection' | 'booking' | 'order' | 'success'>('selection');
+  const [step, setStep] = useState<'selection' | 'booking' | 'order' | 'followup' | 'success'>('selection');
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -19,7 +19,10 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     product: '',
     description: '',
     reference: '',
-    branch: ''
+    branch: '',
+    teamReference: '',
+    teamArea: '',
+    followupStatus: 'Proses'
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +48,10 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       product: '',
       description: '',
       reference: '',
-      branch: ''
+      branch: '',
+      teamReference: '',
+      teamArea: '',
+      followupStatus: 'Proses'
     });
   };
 
@@ -74,7 +80,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     setIsSubmitting(true);
 
     try {
-      const type = step === 'booking' ? 'Booking Layanan' : 'Order Produk';
+      const type = step === 'booking' ? 'Booking Layanan' : step === 'followup' ? 'Follow Up' : 'Order Produk';
       const waBase = formatWhatsAppLink(formData.phone);
       const cleanedPhone = waBase.split('/').pop();
       
@@ -88,6 +94,15 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       `*Alamat:* ${formData.address}\n` +
                       `*Layanan:* ${formData.service}\n\n` +
                       `Mohon info jadwal yang tersedia. Terima kasih!`;
+      } else if (step === 'followup') {
+        messageText = `*FOLLOW UP CUSTOMER VISIGO*\n\n` +
+                      `*Nama:* ${formData.name}\n` +
+                      `*No. WA:* ${formData.phone}\n` +
+                      `*Alamat:* ${formData.address}\n` +
+                      `*Referensi Tim:* ${formData.teamReference}\n` +
+                      `*Area Tim:* ${formData.teamArea}\n` +
+                      `*Status:* ${formData.followupStatus}\n\n` +
+                      `Data followup telah diperbarui.`;
       } else {
         messageText = `*ORDER PRODUK VISIGO*\n\n` +
                       `*Nama:* ${formData.name}\n` +
@@ -165,6 +180,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           description: formData.description || '-',
           reference: formData.reference || '-',
           branch: formData.branch || '-',
+          team_reference: formData.teamReference || '-',
+          team_area: formData.teamArea || '-',
+          followup_status_value: formData.followupStatus || 'Proses',
           whatsapp_link: waLinkForSheet,
           wa_followup: waFollowUpLink,
           next_check_date: nextCheckDateStr,
@@ -274,6 +292,21 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       </div>
                     </div>
                   </button>
+
+                  <button 
+                    onClick={() => setStep('followup')}
+                    className="w-full p-6 rounded-2xl border-2 border-slate-100 dark:border-slate-800 hover:border-brand-cyan dark:hover:border-brand-cyan bg-slate-50 dark:bg-slate-800/50 transition-all group text-left"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="bg-brand-cyan/10 p-3 rounded-xl text-brand-cyan group-hover:bg-brand-cyan group-hover:text-white transition-colors">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-white">Follow Up</h4>
+                        <p className="text-sm text-slate-500">Laporan tindak lanjut tim lapangan</p>
+                      </div>
+                    </div>
+                  </button>
                 </div>
               ) : step === 'success' ? (
                 <div className="py-8 text-center">
@@ -352,6 +385,44 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                         <option>Screening Sekolah</option>
                       </select>
                     </div>
+                  ) : step === 'followup' ? (
+                    <>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Referensi Tim VisiGo</label>
+                        <input 
+                          required
+                          type="text" 
+                          value={formData.teamReference}
+                          onChange={(e) => setFormData({...formData, teamReference: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-cyan outline-none transition-all" 
+                          placeholder="Nama tim lapangan" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Area Tim VisiGo</label>
+                        <input 
+                          required
+                          type="text" 
+                          value={formData.teamArea}
+                          onChange={(e) => setFormData({...formData, teamArea: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-cyan outline-none transition-all" 
+                          placeholder="Area tugas tim" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Status Follow Up</label>
+                        <select 
+                          value={formData.followupStatus}
+                          onChange={(e) => setFormData({...formData, followupStatus: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-cyan outline-none transition-all"
+                        >
+                          <option>Proses</option>
+                          <option>Done</option>
+                          <option>Pending</option>
+                          <option>Cancel</option>
+                        </select>
+                      </div>
+                    </>
                   ) : (
                     <>
                       <div>
@@ -424,7 +495,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full ${step === 'booking' ? 'bg-brand-blue' : 'bg-brand-green'} hover:opacity-90 disabled:bg-slate-400 text-white py-4 rounded-xl font-bold mt-4 transition-all flex items-center justify-center gap-3 shadow-lg`}
+                    className={`w-full ${step === 'booking' ? 'bg-brand-blue' : step === 'followup' ? 'bg-brand-cyan' : 'bg-brand-green'} hover:opacity-90 disabled:bg-slate-400 text-white py-4 rounded-xl font-bold mt-4 transition-all flex items-center justify-center gap-3 shadow-lg`}
                   >
                     {isSubmitting ? (
                       <>

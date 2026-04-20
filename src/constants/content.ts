@@ -95,7 +95,7 @@ export const defaultContent: Content = {
     title: "Kesehatan Mata Anda Adalah Prioritas Kami",
     desc: "Jangan tunda lagi. Jadwalkan pemeriksaan mata Anda sekarang dan nikmati layanan optik profesional di rumah."
   },
-  googleSheetUrl: "https://script.google.com/macros/s/AKfycbxvPL8EjfxDZxxBlZaKVVZO_RfH444TLCFW5cRT2r4QDhZGzsVjVrYy_m-O8s_7qrVWZg/exec",
+  googleSheetUrl: "https://script.google.com/macros/s/AKfycbwDDhXQMIvxkydv5opSTNYAo-2ReUpd6-aWdixYF-embJz6E6n_6fl5J32wwJIUdqO3sQ/exec",
   logoUrl: "https://i.ibb.co.com/WNvxR9Kw/VISIGO-LOGO.png",
   whatsappNumber: "6281296921892",
   socialLinks: {
