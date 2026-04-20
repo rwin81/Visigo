@@ -99,8 +99,8 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       `*Nama:* ${formData.name}\n` +
                       `*No. WA:* ${formData.phone}\n` +
                       `*Alamat:* ${formData.address}\n` +
-                      `*Referensi Tim:* ${formData.teamReference}\n` +
-                      `*Area Tim:* ${formData.teamArea}\n` +
+                      `*Petugas:* ${formData.teamReference}\n` +
+                      `*Cabang:* ${formData.teamArea}\n` +
                       `*Status:* ${formData.followupStatus}\n\n` +
                       `Data followup telah diperbarui.`;
       } else {
@@ -388,25 +388,25 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   ) : step === 'followup' ? (
                     <>
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Referensi Tim VisiGo</label>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Petugas Chek mata</label>
                         <input 
                           required
                           type="text" 
                           value={formData.teamReference}
                           onChange={(e) => setFormData({...formData, teamReference: e.target.value})}
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-cyan outline-none transition-all" 
-                          placeholder="Nama tim lapangan" 
+                          placeholder="Nama petugas" 
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Area Tim VisiGo</label>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">kantor cabang</label>
                         <input 
                           required
                           type="text" 
                           value={formData.teamArea}
                           onChange={(e) => setFormData({...formData, teamArea: e.target.value})}
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-cyan outline-none transition-all" 
-                          placeholder="Area tugas tim" 
+                          placeholder="Nama cabang" 
                         />
                       </div>
                       <div>
