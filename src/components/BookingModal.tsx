@@ -22,7 +22,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     branch: '',
     teamReference: '',
     teamArea: '',
-    followupStatus: 'Proses'
+    followupStatus: 'Proses',
+    affiliateName: '',
+    affiliateArea: ''
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,7 +53,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       branch: '',
       teamReference: '',
       teamArea: '',
-      followupStatus: 'Proses'
+      followupStatus: 'Proses',
+      affiliateName: '',
+      affiliateArea: ''
     });
   };
 
@@ -92,7 +96,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       `*Nama:* ${formData.name}\n` +
                       `*No. WA:* ${formData.phone}\n` +
                       `*Alamat:* ${formData.address}\n` +
-                      `*Layanan:* ${formData.service}\n\n` +
+                      `*Layanan:* ${formData.service}\n` +
+                      `*Affiliate:* ${formData.affiliateName || '-'}\n` +
+                      `*Area:* ${formData.affiliateArea || '-'}\n\n` +
                       `Mohon info jadwal yang tersedia. Terima kasih!`;
       } else if (step === 'followup') {
         messageText = `*FOLLOW UP CUSTOMER VISIGO*\n\n` +
@@ -182,6 +188,8 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           branch: formData.branch || '-',
           team_reference: formData.teamReference || '-',
           team_area: formData.teamArea || '-',
+          affiliate_name: formData.affiliateName || '-',
+          affiliate_area: formData.affiliateArea || '-',
           followup_status_value: formData.followupStatus || 'Proses',
           whatsapp_link: waLinkForSheet,
           wa_followup: waFollowUpLink,
@@ -372,7 +380,8 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   </div>
 
                   {step === 'booking' ? (
-                    <div>
+                    <>
+                      <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Pilih Layanan</label>
                       <select 
                         value={formData.service}
@@ -385,8 +394,31 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                         <option>Screening Sekolah</option>
                       </select>
                     </div>
-                  ) : step === 'followup' ? (
-                    <>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nama affiliate</label>
+                        <input 
+                          type="text" 
+                          value={formData.affiliateName}
+                          onChange={(e) => setFormData({...formData, affiliateName: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Nama affiliate" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">area</label>
+                        <input 
+                          type="text" 
+                          value={formData.affiliateArea}
+                          onChange={(e) => setFormData({...formData, affiliateArea: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Area" 
+                        />
+                      </div>
+                    </div>
+                  </>
+                ) : step === 'followup' ? (
+                  <>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Petugas Chek mata</label>
                         <input 
