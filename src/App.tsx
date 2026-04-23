@@ -132,7 +132,7 @@ export default function App() {
           <CTA content={content.cta} setIsBookingOpen={setIsBookingOpen} />
         </main>
 
-        <Footer content={content} />
+        <Footer content={content} setIsBookingOpen={setIsBookingOpen} />
 
         {/* Social Proof Notifications */}
         <SocialProof />

@@ -10,7 +10,7 @@ interface BookingModalProps {
 }
 
 export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) => {
-  const [step, setStep] = useState<'selection' | 'booking' | 'order' | 'followup' | 'success'>('selection');
+  const [step, setStep] = useState<'selection' | 'booking' | 'order' | 'followup' | 'idcard' | 'success'>('selection');
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -24,7 +24,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     teamArea: '',
     followupStatus: 'Proses',
     affiliateName: '',
-    affiliateArea: ''
+    affiliateArea: '',
+    nik: '',
+    domicile: ''
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,7 +57,9 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       teamArea: '',
       followupStatus: 'Proses',
       affiliateName: '',
-      affiliateArea: ''
+      affiliateArea: '',
+      nik: '',
+      domicile: ''
     });
   };
 
@@ -84,7 +88,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     setIsSubmitting(true);
 
     try {
-      const type = step === 'booking' ? 'Booking Layanan' : step === 'followup' ? 'Follow Up' : 'Order Produk';
+      const type = step === 'booking' ? 'Booking Layanan' : step === 'followup' ? 'Follow Up' : step === 'idcard' ? 'Registrasi ID Card' : 'Order Produk';
       const waBase = formatWhatsAppLink(formData.phone);
       const cleanedPhone = waBase.split('/').pop();
       
@@ -100,6 +104,14 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       `*Affiliate:* ${formData.affiliateName || '-'}\n` +
                       `*Area:* ${formData.affiliateArea || '-'}\n\n` +
                       `Mohon info jadwal yang tersedia. Terima kasih!`;
+      } else if (step === 'idcard') {
+        messageText = `*PENGAJUAN ID CARD VISIGO*\n\n` +
+                      `*Nama Lengkap:* ${formData.name}\n` +
+                      `*NIK:* ${formData.nik}\n` +
+                      `*No. HP:* ${formData.phone}\n` +
+                      `*Domisili:* ${formData.domicile}\n` +
+                      `*Cabang:* ${formData.branch}\n\n` +
+                      `Mohon proses verifikasi ID Card saya. Terima kasih!`;
       } else if (step === 'followup') {
         messageText = `*FOLLOW UP CUSTOMER VISIGO*\n\n` +
                       `*Nama:* ${formData.name}\n` +
@@ -190,6 +202,8 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           team_area: formData.teamArea || '-',
           affiliate_name: formData.affiliateName || '-',
           affiliate_area: formData.affiliateArea || '-',
+          nik: formData.nik || '-',
+          domicile: formData.domicile || '-',
           followup_status_value: formData.followupStatus || 'Proses',
           whatsapp_link: waLinkForSheet,
           wa_followup: waFollowUpLink,
@@ -257,7 +271,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                   </button>
                 )}
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-                  {step === 'selection' ? 'Pilih Layanan' : step === 'booking' ? 'Booking Layanan' : step === 'order' ? 'Order Produk' : 'Booking Berhasil!'}
+                  {step === 'selection' ? 'Pilih Layanan' : step === 'booking' ? 'Booking Layanan' : step === 'order' ? 'Order Produk' : step === 'idcard' ? 'Form ID Card Tim' : 'Berhasil!'}
                 </h3>
               </div>
               <button 
@@ -315,6 +329,21 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       </div>
                     </div>
                   </button>
+
+                  <button 
+                    onClick={() => setStep('idcard')}
+                    className="w-full p-6 rounded-2xl border-2 border-slate-100 dark:border-slate-800 hover:border-brand-blue dark:hover:border-brand-blue bg-slate-50 dark:bg-slate-800/50 transition-all group text-left"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="bg-brand-blue/10 p-3 rounded-xl text-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 014 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.333 0 4 1 4 3" /></svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-white">ID Card Tim VisiGo</h4>
+                        <p className="text-sm text-slate-500">Verifikasi & Registrasi Petugas</p>
+                      </div>
+                    </div>
+                  </button>
                 </div>
               ) : step === 'success' ? (
                 <div className="py-8 text-center">
@@ -337,49 +366,126 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap</label>
-                    <input 
-                      required
-                      type="text" 
-                      value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                      placeholder="Masukkan nama Anda" 
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nomor WhatsApp</label>
-                    <input 
-                      required
-                      type="tel" 
-                      pattern="[0-9]*"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                      placeholder="Contoh: 08123456789" 
-                      title="Masukkan nomor WhatsApp yang valid (hanya angka)"
-                    />
-                    {formData.phone.length >= 9 && (
-                      <p className="text-[10px] text-brand-blue dark:text-brand-cyan mt-1.5 flex items-center gap-1">
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.172 13.828a4 4 0 015.656 0l4-4a4 4 0 115.656 5.656l-1.101 1.101" /></svg>
-                        Link WA: {formatWhatsAppLink(formData.phone)}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Alamat Lengkap</label>
-                    <textarea 
-                      required
-                      value={formData.address}
-                      onChange={(e) => setFormData({...formData, address: e.target.value})}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                      placeholder="Masukkan alamat lengkap Anda"
-                      rows={2}
-                    />
-                  </div>
+                  {step === 'idcard' ? (
+                    <>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap</label>
+                        <input 
+                          required
+                          type="text" 
+                          value={formData.name}
+                          onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Nama lengkap sesuai KTP" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">NIK</label>
+                        <input 
+                          required
+                          type="text" 
+                          pattern="[0-9]*"
+                          value={formData.nik}
+                          onChange={(e) => setFormData({...formData, nik: e.target.value.replace(/\D/g, '')})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Nomor Induk Kependudukan" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nomor HP/WA</label>
+                        <input 
+                          required
+                          type="tel" 
+                          value={formData.phone}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="0812..." 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Domisili</label>
+                        <input 
+                          required
+                          type="text" 
+                          value={formData.domicile}
+                          onChange={(e) => setFormData({...formData, domicile: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Kota / Kabupaten" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Cabang VisiGo</label>
+                        <select 
+                          value={formData.branch}
+                          onChange={(e) => setFormData({...formData, branch: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all"
+                        >
+                          <option value="">Pilih Cabang</option>
+                          {content.coverage.cities.map(city => (
+                            <option key={city} value={city}>{city}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Upload KTP</label>
+                        <div className="relative">
+                          <input 
+                            required
+                            type="file" 
+                            accept="image/*"
+                            onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
+                            className="hidden" 
+                            id="ktp-upload"
+                          />
+                          <label 
+                            htmlFor="ktp-upload"
+                            className="w-full px-4 py-3 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer flex items-center justify-center gap-2"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            {selectedFile ? selectedFile.name : "Foto KTP Jelas"}
+                          </label>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap</label>
+                        <input 
+                          required
+                          type="text" 
+                          value={formData.name}
+                          onChange={(e) => setFormData({...formData, name: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Masukkan nama Anda" 
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nomor WhatsApp</label>
+                        <input 
+                          required
+                          type="tel" 
+                          pattern="[0-9]*"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value.replace(/\D/g, '')})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Contoh: 08123456789" 
+                          title="Masukkan nomor WhatsApp yang valid (hanya angka)"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Alamat Lengkap</label>
+                        <textarea 
+                          required
+                          value={formData.address}
+                          onChange={(e) => setFormData({...formData, address: e.target.value})}
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
+                          placeholder="Masukkan alamat lengkap Anda"
+                          rows={2}
+                        />
+                      </div>
 
-                  {step === 'booking' ? (
+                      {step === 'booking' ? (
                     <>
                       <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Pilih Layanan</label>
@@ -523,9 +629,11 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       </div>
                     </>
                   )}
+                </>
+              )}
 
-                  <button 
-                    type="submit"
+              <button 
+                type="submit"
                     disabled={isSubmitting}
                     className={`w-full ${step === 'booking' ? 'bg-brand-blue' : step === 'followup' ? 'bg-brand-cyan' : 'bg-brand-green'} hover:opacity-90 disabled:bg-slate-400 text-white py-4 rounded-xl font-bold mt-4 transition-all flex items-center justify-center gap-3 shadow-lg`}
                   >

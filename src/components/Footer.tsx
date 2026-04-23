@@ -6,9 +6,10 @@ import { Content } from '../types';
 
 interface FooterProps {
   content: Content;
+  setIsBookingOpen: (open: boolean) => void;
 }
 
-export const Footer = ({ content }: FooterProps) => {
+export const Footer = ({ content, setIsBookingOpen }: FooterProps) => {
   return (
     <footer className="bg-slate-950 text-slate-400 py-24 border-t border-slate-900 overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
@@ -61,7 +62,7 @@ export const Footer = ({ content }: FooterProps) => {
             <h4 className="text-white font-extrabold mb-8 uppercase tracking-[0.2em] text-sm">Layanan</h4>
             <ul className="space-y-5">
               <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Cek Mata di Rumah</a></li>
-              <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Kacamata Custom</a></li>
+              <li><button onClick={() => setIsBookingOpen(true)} className="hover:text-brand-cyan transition-colors font-medium text-left">ID Card Tim VisiGo</button></li>
               <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Lensa Kontak</a></li>
               <li><a href="#" className="hover:text-brand-cyan transition-colors font-medium">Corporate Service</a></li>
             </ul>
