@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingBag, Calendar } from 'lucide-react';
 
 const names = ['Totok', 'Rina', 'Budi', 'Siti', 'Andi', 'Maya', 'Eko', 'Linda', 'Ahmad', 'Diana', 'Hendra', 'Sari'];
-const cities = ['Blora', 'Tuban', 'Bojonegoro', 'Lamongan', 'Rembang', 'Purwodadi', 'Sragen', 'Jogjakarta', 'Purworejo', 'Gunungkidul', 'Wonogiri', 'Demak'];
+const cities = ['Blora', 'Tuban', 'Bojonegoro', 'Lamongan', 'Rembang', 'Purwodadi', 'Sragen', 'Jogjakarta', 'Purworejo', 'Gunungkidul', 'Wonogiri', 'Demak', 'Pati'];
 const actions = [
   'barusan booking Home Eye Check',
   'baru saja pesan kacamata baru',

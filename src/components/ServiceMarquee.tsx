@@ -9,7 +9,7 @@ interface ServiceMarqueeProps {
 
 export const ServiceMarquee = ({ cities, logoUrl, setIsBookingOpen }: ServiceMarqueeProps) => {
   // Duplicate cities to ensure smooth infinite scroll
-  const displayCities = [...cities, ...cities, ...cities, ...cities];
+  const displayCities = [...cities, ...cities];
 
   return (
     <div className="bg-brand-blue dark:bg-slate-950 py-4 overflow-hidden border-y border-white/10 relative group">
@@ -22,15 +22,15 @@ export const ServiceMarquee = ({ cities, logoUrl, setIsBookingOpen }: ServiceMar
 
       <motion.div
         animate={{
-          x: [0, -2000], 
+          x: ["0%", "-50%"], 
         }}
         transition={{
-          duration: 40,
+          duration: 30, // Adjust speed as needed
           repeat: Infinity,
           ease: "linear",
         }}
         whileHover={{ animationPlayState: 'paused' }}
-        className="flex items-center gap-16 whitespace-nowrap relative z-10"
+        className="flex items-center gap-16 whitespace-nowrap relative z-10 w-max"
       >
         {displayCities.map((city, i) => (
           <div 

@@ -513,13 +513,16 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">area</label>
-                        <input 
-                          type="text" 
+                        <select 
                           value={formData.affiliateArea}
                           onChange={(e) => setFormData({...formData, affiliateArea: e.target.value})}
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                          placeholder="Area" 
-                        />
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all"
+                        >
+                          <option value="">Pilih Area</option>
+                          {content.coverage.cities.map(city => (
+                            <option key={city} value={city}>{city}</option>
+                          ))}
+                        </select>
                       </div>
                     </div>
                   </>
@@ -538,14 +541,17 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">kantor cabang</label>
-                        <input 
+                        <select 
                           required
-                          type="text" 
                           value={formData.teamArea}
                           onChange={(e) => setFormData({...formData, teamArea: e.target.value})}
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-cyan outline-none transition-all" 
-                          placeholder="Nama cabang" 
-                        />
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-cyan outline-none transition-all"
+                        >
+                          <option value="">Pilih Cabang</option>
+                          {content.coverage.cities.map(city => (
+                            <option key={city} value={city}>{city}</option>
+                          ))}
+                        </select>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Status Follow Up</label>
@@ -618,13 +624,16 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">kantor cabang</label>
-                          <input 
-                            type="text" 
+                          <select 
                             value={formData.branch}
                             onChange={(e) => setFormData({...formData, branch: e.target.value})}
-                            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all" 
-                            placeholder="Nama cabang" 
-                          />
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all"
+                          >
+                            <option value="">Pilih Cabang</option>
+                            {content.coverage.cities.map(city => (
+                              <option key={city} value={city}>{city}</option>
+                            ))}
+                          </select>
                         </div>
                       </div>
                     </>

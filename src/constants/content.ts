@@ -88,8 +88,8 @@ export const defaultContent: Content = {
   },
   coverage: {
     title: "Jaringan Besar VisiGo",
-    desc: "Didukung oleh 200+ Tim Profesional di berbagai kota. Saat ini kami melayani area Tuban, Bojonegoro, Lamongan, Rembang, Blora, Purwodadi, Sragen, jogjakarta, Purworejo, Gunungkidul, wonogiri, Demak.",
-    cities: ["Tuban", "Bojonegoro", "Lamongan", "Rembang", "Blora", "Purwodadi", "Sragen", "Jogjakarta", "Purworejo", "Gunungkidul", "Wonogiri", "Demak"]
+    desc: "Didukung oleh 200+ Tim Profesional di berbagai kota. Saat ini kami melayani area Tuban, Bojonegoro, Lamongan, Rembang, Blora, Purwodadi, Sragen, Jogjakarta, Purworejo, Gunungkidul, Wonogiri, Demak, Pati.",
+    cities: ["Tuban", "Bojonegoro", "Lamongan", "Rembang", "Blora", "Purwodadi", "Sragen", "Jogjakarta", "Purworejo", "Gunungkidul", "Wonogiri", "Demak", "Pati"]
   },
   cta: {
     title: "Kesehatan Mata Anda Adalah Prioritas Kami",
