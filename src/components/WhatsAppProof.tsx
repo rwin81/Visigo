@@ -12,7 +12,15 @@ const chatScreenshots = [
   "https://i.ibb.co.com/Ng016Xpc/Whats-App-Image-2026-04-08-at-13-34-39.jpg"
 ];
 
-export const WhatsAppProof = () => {
+interface WhatsAppProofProps {
+  socialLinks?: {
+    instagram?: string;
+    facebook?: string;
+    tiktok?: string;
+  };
+}
+
+export const WhatsAppProof = ({ socialLinks }: WhatsAppProofProps) => {
   return (
     <section className="relative py-32 bg-slate-50 dark:bg-slate-950 overflow-hidden">
       {/* WhatsApp Doodle Background Pattern */}
@@ -147,12 +155,26 @@ export const WhatsAppProof = () => {
             <p className="text-slate-500 dark:text-slate-400 font-medium mb-4 italic">
               *Data chat di atas adalah ilustrasi dari percakapan asli pelanggan kami demi menjaga privasi.
             </p>
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-brand-green/10 text-brand-green rounded-full font-bold text-sm">
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
-              </span>
-              Ratusan Chat Masuk Setiap Hari
+            <div className="flex flex-col items-center gap-6">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-brand-green/10 text-brand-green rounded-full font-bold text-sm">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
+                </span>
+                Ratusan Chat Masuk Setiap Hari
+              </div>
+              
+              <div className="bg-white dark:bg-slate-900 px-8 py-6 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
+                <p className="text-slate-600 dark:text-slate-300 font-bold mb-3">Mau lihat testimoni real lainnya?</p>
+                <p className="text-slate-500 dark:text-slate-400 text-sm mb-0">Follow & Cek Akun Resmi Kami:</p>
+                <div className="flex justify-center gap-4 mt-3">
+                  <a href={socialLinks?.tiktok || "#"} target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:text-brand-cyan transition-colors font-black uppercase text-xs tracking-tighter">TikTok</a>
+                  <span className="text-slate-300">•</span>
+                  <a href={socialLinks?.instagram || "#"} target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:text-brand-cyan transition-colors font-black uppercase text-xs tracking-tighter">Instagram</a>
+                  <span className="text-slate-300">•</span>
+                  <a href={socialLinks?.facebook || "#"} target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:text-brand-cyan transition-colors font-black uppercase text-xs tracking-tighter">Facebook</a>
+                </div>
+              </div>
             </div>
           </FadeIn>
         </div>

@@ -121,8 +121,8 @@ export default function App() {
           <HowItWorks content={content.howItWorks} />
           <WhyChooseVisiGoHook setIsBookingOpen={setIsBookingOpen} />
           <TrustGallery />
-          <WhatsAppProof />
-          <Testimonials content={content.testimonials} />
+          <WhatsAppProof socialLinks={content.socialLinks} />
+          <Testimonials content={content.testimonials} socialLinks={content.socialLinks} />
           <Coverage content={content.coverage} setIsBookingOpen={setIsBookingOpen} />
           <ServiceMarquee 
             cities={content.coverage.cities} 

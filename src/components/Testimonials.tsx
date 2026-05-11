@@ -7,9 +7,10 @@ import { Content } from '../types';
 
 interface TestimonialsProps {
   content: Content['testimonials'];
+  socialLinks?: Content['socialLinks'];
 }
 
-export const Testimonials = ({ content }: TestimonialsProps) => {
+export const Testimonials = ({ content, socialLinks }: TestimonialsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [isPaused, setIsPaused] = useState(false);
@@ -160,6 +161,62 @@ export const Testimonials = ({ content }: TestimonialsProps) => {
                 aria-label={`Go to page ${i + 1}`}
               />
             ))}
+          </div>
+        </div>
+
+        <div className="mt-20 bg-white dark:bg-slate-800 rounded-[3rem] p-8 md:p-12 border border-slate-100 dark:border-slate-700 shadow-2xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue/5 rounded-full -mr-32 -mt-32 blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-green/5 rounded-full -ml-32 -mb-32 blur-3xl" />
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-4">
+                Lihat Real Testimoni Lainnya ✨
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 text-lg max-w-xl">
+                Cek ribuan interaksi dan bukti kepuasan pelanggan VisiGo Home Eye Care secara langsung di akun media sosial kami.
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href={socialLinks?.tiktok || "#"} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-4 bg-black text-white rounded-2xl hover:scale-105 transition-all shadow-lg"
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.13-1.47-.13 3.44-.3 6.88-.45 10.32-.15 2.13-1.13 4.23-2.94 5.37-2.02 1.28-4.72 1.44-6.86.41-2.14-1.03-3.67-3.26-3.84-5.64-.17-2.38 1.05-4.74 3.06-6.02 1.13-.72 2.48-1.07 3.81-1.02V10.1c-1.35-.05-2.73.32-3.83 1.11-1.1.79-1.8 2.04-1.89 3.4-.09 1.36.4 2.74 1.34 3.72.94.98 2.29 1.48 3.65 1.36 1.36-.12 2.6-.96 3.19-2.19.46-.96.58-2.05.58-3.12V0l.01.02z"/>
+                </svg>
+                <span className="font-bold">TikTok</span>
+              </a>
+              
+              <a 
+                href={socialLinks?.instagram || "#"} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-4 bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 text-white rounded-2xl hover:scale-105 transition-all shadow-lg"
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current stroke-2" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+                <span className="font-bold">Instagram</span>
+              </a>
+              
+              <a 
+                href={socialLinks?.facebook || "#"} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-4 bg-[#1877F2] text-white rounded-2xl hover:scale-105 transition-all shadow-lg"
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span className="font-bold">Facebook</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
