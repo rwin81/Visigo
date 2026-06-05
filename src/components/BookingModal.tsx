@@ -3,6 +3,51 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Loader2 } from 'lucide-react';
 import { Content } from '../types';
 
+const compressImage = (file: File, maxWidth = 1200, maxHeight = 1200, quality = 0.75): Promise<string> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', quality);
+          resolve(dataUrl);
+        } else {
+          resolve(event.target?.result as string);
+        }
+      };
+    };
+    reader.onerror = () => {
+      const fallbackReader = new FileReader();
+      fallbackReader.onloadend = () => resolve(fallbackReader.result as string);
+      fallbackReader.readAsDataURL(file);
+    };
+  });
+};
+
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -140,18 +185,36 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       // Calling this before async work to ensure it's not blocked by popup blockers
       window.open(finalWaUrl, '_blank');
       
-      // 4. Handle File Upload if exists
+      // 4. Handle File Upload with automatic compression for images
       let filePayload = null;
       if (selectedFile) {
-        const base64 = await new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.readAsDataURL(selectedFile);
-        });
+        let base64 = '';
+        if (selectedFile.type.startsWith('image/')) {
+          try {
+            base64 = await compressImage(selectedFile, 1200, 1200, 0.75);
+          } catch (compressError) {
+            console.error("Image compression failed, falling back to standard read:", compressError);
+            base64 = await new Promise<string>((resolve) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result as string);
+              reader.readAsDataURL(selectedFile);
+            });
+          }
+        } else {
+          base64 = await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.readAsDataURL(selectedFile);
+          });
+        }
+
+        const base64Data = base64.includes(',') ? base64.split(',')[1] : base64;
         filePayload = {
-          base64: base64.split(',')[1],
-          type: selectedFile.type,
-          name: selectedFile.name
+          base64: base64Data,
+          type: selectedFile.type.startsWith('image/') ? 'image/jpeg' : selectedFile.type,
+          name: selectedFile.type.startsWith('image/') 
+            ? selectedFile.name.replace(/\.[^/.]+$/, "") + ".jpg" 
+            : selectedFile.name
         };
       }
 
