@@ -74,6 +74,8 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     domicile: ''
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [filePayload, setFilePayload] = useState<{ base64: string; type: string; name: string } | null>(null);
+  const [isFileProcessing, setIsFileProcessing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [generatedWaLink, setGeneratedWaLink] = useState('');
 
@@ -89,6 +91,8 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     setStep('selection');
     setGeneratedWaLink('');
     setSelectedFile(null);
+    setFilePayload(null);
+    setIsFileProcessing(false);
     setFormData({
       name: '',
       phone: '',
@@ -106,6 +110,52 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       nik: '',
       domicile: ''
     });
+  };
+
+  const handleFileChange = async (file: File | null) => {
+    setSelectedFile(file);
+    if (!file) {
+      setFilePayload(null);
+      return;
+    }
+
+    setIsFileProcessing(true);
+    try {
+      let base64 = '';
+      if (file.type.startsWith('image/')) {
+        try {
+          base64 = await compressImage(file, 1200, 1200, 0.75);
+        } catch (compressError) {
+          console.error("Image compression failed, falling back to standard read:", compressError);
+          base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        }
+      } else {
+        base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      const base64Data = base64.includes(',') ? base64.split(',')[1] : base64;
+      setFilePayload({
+        base64: base64Data,
+        type: file.type.startsWith('image/') ? 'image/jpeg' : file.type,
+        name: file.type.startsWith('image/') 
+          ? file.name.replace(/\.[^/.]+$/, "") + ".jpg" 
+          : file.name
+      });
+    } catch (err) {
+      console.error("Error reading/processing file:", err);
+    } finally {
+      setIsFileProcessing(false);
+    }
   };
 
   const formatWhatsAppLink = (phone: string) => {
@@ -128,7 +178,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
     return `https://wa.me/${cleaned}`;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -137,7 +187,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       const waBase = formatWhatsAppLink(formData.phone);
       const cleanedPhone = waBase.split('/').pop();
       
-      // 2. Prepare WhatsApp Message for Admin (Customer sends to Admin)
+      // 1. Prepare WhatsApp Message for Admin (Customer sends to Admin)
       let messageText = '';
       
       if (step === 'booking') {
@@ -181,43 +231,6 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       const finalWaUrl = `https://wa.me/${content.whatsappNumber}?text=${encodeURIComponent(messageText)}`;
       setGeneratedWaLink(finalWaUrl);
       
-      // 3. IMMEDIATELY Redirect / Open WhatsApp
-      // Calling this before async work to ensure it's not blocked by popup blockers
-      window.open(finalWaUrl, '_blank');
-      
-      // 4. Handle File Upload with automatic compression for images
-      let filePayload = null;
-      if (selectedFile) {
-        let base64 = '';
-        if (selectedFile.type.startsWith('image/')) {
-          try {
-            base64 = await compressImage(selectedFile, 1200, 1200, 0.75);
-          } catch (compressError) {
-            console.error("Image compression failed, falling back to standard read:", compressError);
-            base64 = await new Promise<string>((resolve) => {
-              const reader = new FileReader();
-              reader.onloadend = () => resolve(reader.result as string);
-              reader.readAsDataURL(selectedFile);
-            });
-          }
-        } else {
-          base64 = await new Promise<string>((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.readAsDataURL(selectedFile);
-          });
-        }
-
-        const base64Data = base64.includes(',') ? base64.split(',')[1] : base64;
-        filePayload = {
-          base64: base64Data,
-          type: selectedFile.type.startsWith('image/') ? 'image/jpeg' : selectedFile.type,
-          name: selectedFile.type.startsWith('image/') 
-            ? selectedFile.name.replace(/\.[^/.]+$/, "") + ".jpg" 
-            : selectedFile.name
-        };
-      }
-
       // Manual URL Encoding for Emojis to ensure they survive the transport to Google Sheets
       const waveEnc = "%F0%9F%91%8B";
       const glassesEnc = "%F0%9F%91%93";
@@ -227,7 +240,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
       
       const encodeText = (text: string) => encodeURIComponent(text).replace(/%20/g, '+');
       
-      // 1. Template for Initial Confirmation (Current)
+      // Initial Confirmation Link
       let waLinkForSheet = '';
       if (step === 'booking') {
         const text = `https://api.whatsapp.com/send?phone=${cleanedPhone}&text=Halo+kak+${encodeText(formData.name)},+saya+Admin+VisiGo+${waveEnc}+Terima+kasih+sudah+booking+layanan+${encodeText(formData.service)}+${glassesEnc}+Kapan+waktu+yang+pas+untuk+kami+kunjungi?+${calendarEnc}`;
@@ -237,27 +250,26 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
         waLinkForSheet = `=HYPERLINK("${text}", "Chat ${formData.name}")`;
       }
 
-      // 2. Template for Follow-up Reminder (3 months later)
+      // Follow-up Reminder Link (3 months later)
       const followUpMsg = `Halo+kak+${encodeText(formData.name)},+apa+kabar?+${waveEnc}+Sudah+3+bulan+nih+sejak+kunjungan/order+terakhir+di+VisiGo.+Yuk+jadwalkan+cek+mata+rutin+lagi+supaya+mata+tetap+sehat+dan+nyaman+${glassesEnc}+${heartEnc}`;
       const waFollowUpLink = `=HYPERLINK("https://api.whatsapp.com/send?phone=${cleanedPhone}&text=${followUpMsg}", "Kirim Pengingat")`;
 
-      // 3. Calculate Next Check Date (Today + 3 Months)
       const nextDate = new Date();
       nextDate.setMonth(nextDate.getMonth() + 3);
       const nextCheckDateStr = nextDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
       
-      // 1. Save to Google Sheet if URL is provided
+      // 2. DISPATCH Google Sheet Post request first
       if (content.googleSheetUrl) {
         const payload = {
           timestamp: new Date().toLocaleString('id-ID'),
           name: formData.name,
           phone_raw: formData.phone,
-          phone: waLinkForSheet, // Compatibility for old script (WhatsApp column)
+          phone: waLinkForSheet,
           address: formData.address,
           type: type,
           service_product: step === 'booking' ? (formData.service || "-") : (formData.product || "-"),
-          service: formData.service || "-", // Compatibility for old script
-          product: formData.product || "-", // Compatibility for old script
+          service: formData.service || "-",
+          product: formData.product || "-",
           description: formData.description || '-',
           reference: formData.reference || '-',
           branch: formData.branch || '-',
@@ -272,13 +284,12 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           wa_followup: waFollowUpLink,
           next_check_date: nextCheckDateStr,
           followup_status: "Belum Diingatkan",
-          file: filePayload // Send file data to script
+          file: filePayload 
         };
 
         try {
           console.log("Sending data to Google Sheet:", payload);
-          // We use no-cors because Google Apps Script doesn't support CORS headers
-          // We wrap it in try-catch so even if it fails, the user can still proceed to WhatsApp
+          // Keepalive is true where possible, but since the raw base64 could exceed 64KB, we do a normal fetch first
           fetch(content.googleSheetUrl, {
             method: 'POST',
             mode: 'no-cors',
@@ -294,8 +305,12 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
           console.error('Google Sheet sync failed to initiate:', sheetError);
         }
       }
+
+      // 3. IMMEDIATELY Redirect / Open WhatsApp in a synchronous tick
+      // This is now 100% compliant with Safari & Chrome popup blockers!
+      window.open(finalWaUrl, '_blank');
       
-      // 5. Show Success Step
+      // 4. Show Success Step
       setStep('success');
       
     } catch (error) {
@@ -496,7 +511,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                             required
                             type="file" 
                             accept="image/*"
-                            onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
+                            onChange={(e) => handleFileChange(e.target.files ? e.target.files[0] : null)}
                             className="hidden" 
                             id="ktp-upload"
                           />
@@ -505,7 +520,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                             className="w-full px-4 py-3 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer flex items-center justify-center gap-2"
                           >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                            {selectedFile ? selectedFile.name : "Foto KTP Jelas"}
+                            {isFileProcessing ? "Memproses Berkas..." : (selectedFile ? selectedFile.name : "Foto KTP Jelas")}
                           </label>
                         </div>
                       </div>
@@ -660,7 +675,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                           <input 
                             type="file" 
                             accept="image/*"
-                            onChange={(e) => setSelectedFile(e.target.files ? e.target.files[0] : null)}
+                            onChange={(e) => handleFileChange(e.target.files ? e.target.files[0] : null)}
                             className="hidden" 
                             id="prescription-upload"
                           />
@@ -669,7 +684,7 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
                             className="w-full px-4 py-3 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:border-brand-green hover:text-brand-green transition-all cursor-pointer flex items-center justify-center gap-2"
                           >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            {selectedFile ? selectedFile.name : "Upload Foto Resep"}
+                            {isFileProcessing ? "Memproses Berkas..." : (selectedFile ? selectedFile.name : "Upload Foto Resep")}
                           </label>
                         </div>
                       </div>
@@ -706,21 +721,26 @@ export const BookingModal = ({ isOpen, onClose, content }: BookingModalProps) =>
 
               <button 
                 type="submit"
-                    disabled={isSubmitting}
-                    className={`w-full ${step === 'booking' ? 'bg-brand-blue' : step === 'followup' ? 'bg-brand-cyan' : 'bg-brand-green'} hover:opacity-90 disabled:bg-slate-400 text-white py-4 rounded-xl font-bold mt-4 transition-all flex items-center justify-center gap-3 shadow-lg`}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-6 h-6 animate-spin" />
-                        Mengirim...
-                      </>
-                    ) : (
-                      <>
-                        <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-8 h-8 scale-110" referrerPolicy="no-referrer" loading="lazy" />
-                        Kirim via WhatsApp
-                      </>
-                    )}
-                  </button>
+                disabled={isSubmitting || isFileProcessing}
+                className={`w-full ${step === 'booking' ? 'bg-brand-blue' : step === 'followup' ? 'bg-brand-cyan' : 'bg-brand-green'} hover:opacity-90 disabled:bg-slate-400 text-white py-4 rounded-xl font-bold mt-4 transition-all flex items-center justify-center gap-3 shadow-lg`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    Mengirim...
+                  </>
+                ) : isFileProcessing ? (
+                  <>
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                    Memproses Foto...
+                  </>
+                ) : (
+                  <>
+                    <img src="https://img.icons8.com/color/96/whatsapp.png" alt="WhatsApp" className="w-8 h-8 scale-110" referrerPolicy="no-referrer" loading="lazy" />
+                    Kirim via WhatsApp
+                  </>
+                )}
+              </button>
 
                   <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
                     <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Malas isi form? Chat admin langsung aja:</p>
